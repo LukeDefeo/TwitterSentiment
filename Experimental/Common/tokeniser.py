@@ -14,3 +14,7 @@ def contains_url(word):
 
 def strip_punctuation(word):
     return word.translate(None, string.punctuation)
+
+
+def tweet_foriegn(tweet):
+    pass

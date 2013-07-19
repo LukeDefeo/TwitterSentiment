@@ -1,5 +1,5 @@
-import sets
 import time
+from Experimental.Common.tokeniser import tweet_foriegn
 
 __author__ = 'Luke'
 
@@ -28,13 +28,18 @@ def add_word_to_set(word):
     if word[0] == '@':
         return
 
-    word.translate(None, string.punctuation)
+    word = word.translate(None, string.punctuation)
     words.add(word)
+
+
+
 
 
 with open("/Users/Luke/Documents/PyCharmProjects/TwitterSentiment/Data/Training/training-data.csv") as training_in:
     for line in training_in:
         sentiment, tweet_content = line.split('\t', 1)
+        if tweet_foriegn(tweet_content):
+            continue
         tweets.append((sentiment, tweet_content))
         for word in tweet_content.split():
             add_word_to_set(word.lower())

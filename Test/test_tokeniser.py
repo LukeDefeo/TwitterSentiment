@@ -12,11 +12,12 @@ class test_tokenizer(TestCase):
             self.assertTrue(contains_url(url))
 
     def test_strip_punctuation(self):
-        words = ['a sentence,', 'with.', 'lots?', 'of',  'strange!', 'strange', 'stange...', 'punctuation']
+        words = [ 'sentence,', 'with.', 'lots?', 'of',  'strange!', 'strange', 'stange...', 'punctuation']
         for word in words:
-            strip_punctuation(word)
-            self.assertFalse(ch for ch in string.punctuation)
+            word = strip_punctuation(word)
+            self.assertTrue(char not in word for char in string.punctuation)
 
 
 if __name__ == '__main__':
     unittest.main()
+
