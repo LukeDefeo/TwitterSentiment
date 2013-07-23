@@ -1,5 +1,5 @@
 import time
-from Experimental.Common.tokeniser import tweet_foriegn
+
 
 __author__ = 'Luke'
 
@@ -25,6 +25,9 @@ words = set()
 def add_word_to_set(word):
     if contains_url(word):
         return
+    if contains_repeated_chars(word):
+        return
+
     if word[0] == '@':
         return
 
@@ -38,7 +41,7 @@ def add_word_to_set(word):
 with open("/Users/Luke/Documents/PyCharmProjects/TwitterSentiment/Data/Training/training-data.csv") as training_in:
     for line in training_in:
         sentiment, tweet_content = line.split('\t', 1)
-        if tweet_foriegn(tweet_content):
+        if contains_foreign_chars(tweet_content):
             continue
         tweets.append((sentiment, tweet_content))
         for word in tweet_content.split():

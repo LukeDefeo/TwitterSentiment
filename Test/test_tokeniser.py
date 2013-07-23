@@ -1,15 +1,16 @@
 #!/usr/bin/python
-# -*- coding: iso-8859-15 -*-
+# -*- coding: UTF-8 -*-
 __author__ = 'Luke'
 
 from unittest import TestCase
 import unittest
 from Experimental.Common.tokeniser import *
 
+
 class test_tokenizer(TestCase):
 
     def test_contains_url(self):
-        urls = ['www.abc.com', 'http://www.cwac.co.uk/dwad', 'https://dwda.org/dwad', 'twitpic.com/wdadawdd']
+        urls = ['www.abc.com', 'http://www.cwac.co.uk/dwad', 'https://dwda.org/dwad', 'twitpic.com/wdadawdd','http://u.nu/9p78']
         for url in urls:
             self.assertTrue(contains_url(url))
 
@@ -20,16 +21,33 @@ class test_tokenizer(TestCase):
             self.assertTrue(char not in word for char in string.punctuation)
 
     def test_contains_foreign_chars(self):
-        string1 = 'This is a regular english text  '
-        string2 = 'with punctuation ! )( ; . > ? '
+        string1 = 'This is a regular english text '
+        string2 = 'with punctuation ! )( ; . > ? and symbols "[ {` ~ +- $'
         string3 = 'and numbers 321 4104'
 
         self.assertFalse(contains_foreign_chars(string1))
         self.assertFalse(contains_foreign_chars(string2))
         self.assertFalse(contains_foreign_chars(string3))
 
-        string4 = 'ó, ò, ñ ç, ¿, ß'
-        self.assertFalse(contains_foreign_chars(string4))
+        string4 = 'Ã³ Ã² Ã± Ã§ Â¿ ÃŸ'
+        self.assertTrue(contains_foreign_chars(string4))
+
+        string5 = 'dawd Ã³?'
+        self.assertTrue(contains_foreign_chars(string5))
+
+    def test_contains_repeated_chars(self):
+        good = 'good ok fine very' #what about numbers 1000?
+        bad = 'goooood fineeee :)))))) gggreat'
+
+        for word in good.split():
+            self.assertFalse(contains_repeated_chars(word))
+
+        for word in bad.split():
+            self.assertTrue(contains_repeated_chars(word))
+
+
+
+
 
 
 if __name__ == '__main__':
