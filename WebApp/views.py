@@ -1,9 +1,15 @@
 import datetime
 import json
 from django.http import HttpResponse, Http404
+from django.shortcuts import render
+from django.template import Context
+from django.template.loader import get_template
 
 __author__ = 'Luke'
 
+
+def main_page(request):
+    return render(request,'main_page.html')
 
 def hello(response):
     return HttpResponse("hello World!!!!")
@@ -11,7 +17,8 @@ def hello(response):
 
 def current_datetime(request):
     now = datetime.datetime.now()
-    html = "<html><body>It is now %s.</body></html>" % now
+    template = get_template('current_datetime.html')
+    html = template._render(Context({'current_date': now}))
     return HttpResponse(html)
 
 
@@ -36,18 +43,16 @@ def test_json(request, query):
     return HttpResponse(json.dumps(l.tweets))
 
 
-
-
 import tweepy
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
 
-consumer_key="ZYaUAuc8zNPM0BL5HgdSSg"
-consumer_secret="x0Xpf6d6P4nHN2GYl91XOK032ppjhCYOIQCQQT9wA"
+consumer_key = "ZYaUAuc8zNPM0BL5HgdSSg"
+consumer_secret = "x0Xpf6d6P4nHN2GYl91XOK032ppjhCYOIQCQQT9wA"
 
-access_token="289934046-1sJjC4Oz1OGT3LYnKgoLGRUehicilfgzMR4TrS6v"
-access_token_secret="qlulCQHYvEKBQFyPOHcuvrsVUalSmWh2hCHbyhv4"
+access_token = "289934046-1sJjC4Oz1OGT3LYnKgoLGRUehicilfgzMR4TrS6v"
+access_token_secret = "qlulCQHYvEKBQFyPOHcuvrsVUalSmWh2hCHbyhv4"
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
