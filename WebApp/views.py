@@ -13,9 +13,8 @@ def main_page(request):
 
 
 def do_search(request):
-    print ' got here'
     if 'q' in request.GET:
-        return HttpResponse('tweets about' + request.GET['q'])
+        return HttpResponse('tweets about ' + request.GET['q'])
     else:
         return main_page(request)
 
