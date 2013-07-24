@@ -48,7 +48,7 @@ def add_word_to_set(word):
     words.add(word)
 
 
-with open("/Users/Luke/Documents/PyCharmProjects/TwitterSentiment/Data/Training/training-data.csv") as training_in:
+with open("/Data/Training/training-data.csv") as training_in:
     for line in training_in:
         sentiment, tweet_content = line.split('\t', 1)
         if contains_foreign_chars(tweet_content):
