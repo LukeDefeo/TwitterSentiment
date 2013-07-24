@@ -19,7 +19,8 @@ urlpatterns = patterns('',
     url(r'^hello/$', hello),
     url(r'^date/$', current_datetime),
     url(r'^time/plus/(\d{1,2})/$', hours_ahead),
-    url(r'^tweet/(\w{1,100})/$', test_json)
+    url(r'^tweet/(\w{1,100})/$', test_json),
+    url(r'^search/$', do_search)
 
 
 )

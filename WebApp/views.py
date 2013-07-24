@@ -11,7 +11,16 @@ __author__ = 'Luke'
 def main_page(request):
     return render(request,'main_page.html')
 
-def hello(response):
+
+def do_search(request):
+    print ' got here'
+    if 'q' in request.GET:
+        return HttpResponse('tweets about' + request.GET['q'])
+    else:
+        return main_page(request)
+
+
+def hello(request):
     return HttpResponse("hello World!!!!")
 
 
