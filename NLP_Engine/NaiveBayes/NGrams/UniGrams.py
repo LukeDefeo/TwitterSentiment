@@ -4,7 +4,7 @@ import time
 __author__ = 'Luke'
 
 import nltk
-from Experimental.Common.tokeniser import *
+from NLP_Engine.Common.tokeniser import *
 import random
 import string
 from nltk import NaiveBayesClassifier
@@ -20,6 +20,20 @@ i = 0
 words = set()
 
 
+word_dict = dict()
+
+def add_to_dict(word):
+    if contains_url(word):
+        return
+    if contains_repeated_chars(word):
+        return
+    if word[0] == '@':
+        return
+
+    if word in word_dict:
+        word_dict[word] += 1
+    else:
+        word_dict[word] = 1
 
 
 def add_word_to_set(word):
@@ -27,15 +41,11 @@ def add_word_to_set(word):
         return
     if contains_repeated_chars(word):
         return
-
     if word[0] == '@':
         return
 
     word = word.translate(None, string.punctuation)
     words.add(word)
-
-
-
 
 
 with open("/Users/Luke/Documents/PyCharmProjects/TwitterSentiment/Data/Training/training-data.csv") as training_in:
@@ -45,16 +55,23 @@ with open("/Users/Luke/Documents/PyCharmProjects/TwitterSentiment/Data/Training/
             continue
         tweets.append((sentiment, tweet_content))
         for word in tweet_content.split():
-            add_word_to_set(word.lower())
+            # add_word_to_set(word.lower())
+            add_to_dict(word)
         i += 1
         # if i == 1200:
         #     break
 
-# print words
-print words
-print len(words)
+for key in word_dict.keys():
+    if word_dict[key] < 3:
+        word_dict.pop(key)
 
-print "done " +  str(time.time() - start_time) + 's'
+# print words
+# print words
+# print len(words)
+
+print len(word_dict)
+
+print "done " + str(time.time() - start_time) + 's'
 
 
 reviews = [(movie_reviews.words(fileid), category)

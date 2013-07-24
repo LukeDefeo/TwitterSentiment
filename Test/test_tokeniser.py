@@ -4,7 +4,7 @@ __author__ = 'Luke'
 
 from unittest import TestCase
 import unittest
-from Experimental.Common.tokeniser import *
+from NLP_Engine.Common.tokeniser import *
 
 
 class test_tokenizer(TestCase):
