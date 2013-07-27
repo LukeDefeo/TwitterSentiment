@@ -6,6 +6,22 @@
     <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="/static/style.css" rel="stylesheet" type="text/css">
 
+    <script>
+        function go(search_query) {
+            //document.write("<p>dwafwafwa</p>");
+            $.getJSON("/json", search_query, function (returned) {
+                $.each(returned, function (k, v) {
+                    //$("ul").append("<li>" + value.first + "<li>")
+                    document.write(k.a)
+
+                })
+            })
+        }
+
+
+    </script>
+
+
 </head>
 
 <body>
@@ -15,11 +31,24 @@
 
     <br>
 
-    <form method="get" class="form-search" action="/search/">
-        <input type="text" name="q" size="35" class="span3 search-query">
-        <button class="btn search-query" >Search</button>
-    </form>
+    <input type="text" name="q" size="35" class="span3 search-query" id="inputBox" autocomplete="False">
 
+    <button class="btn search-query" onclick="go(document.getElementById('inputBox').value)">Search</button>
+
+
+</div>
+
+<div id="searchResults" class="inner-content">
+    <ul>
+        <li>
+            <p> item 1</p>
+
+        </li>
+        <li>
+            <p> item 2</p>
+        </li>
+
+    </ul>
 </div>
 
 

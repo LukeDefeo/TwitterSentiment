@@ -45,11 +45,6 @@ class test_tokenizer(TestCase):
         for word in bad.split():
             self.assertTrue(contains_repeated_chars(word))
 
-
-
-
-
-
 if __name__ == '__main__':
     unittest.main()
 
