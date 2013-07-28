@@ -2,57 +2,65 @@
 <html>
 <head>
     <title>Twitter Sentiment Analysis</title>
+
+    <script src="../static/jquery-1.7.1.min.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="../static/bootstrap-3.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="/static/style.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="../static/twitter_icon.ico">
 
     <script>
         function go(search_query) {
-            //document.write("<p>dwafwafwa</p>");
-            $.getJSON("/json", search_query, function (returned) {
-                $.each(returned, function (k, v) {
-                    //$("ul").append("<li>" + value.first + "<li>")
-                    document.write(k.a)
-
+            console.log('button press');
+            $.getJSON("/json", {q:search_query,start:0}, function (data) {
+                console.log('success');
+                $.each(data, function (key, value) {
+                    $("#searchResults ul").append("<li class=\"list-group-item\">" + value.id + " " + value.text +  "</li>")
                 })
             })
         }
 
+        function write_letters(){
+            var items = document.getElementById("itemList");
 
+            for (var i = 0; i < alphabet.length; i++ ) {
+                var item = document.createElement("li");
+                item.innerHTML = alphabet[i];
+                items.appendChild(item);
+            }
+
+        }
     </script>
-
-
 </head>
 
 <body>
+<div id="all">
+    <div id="header">
+        <h1>Twitter Sentiment Search</h1>
 
-<div align="center" style="width: 100%">
-    <h1>Twitter Sentiment Search</h1>
+        <br>
 
-    <br>
+        <input type="text"
+               onkeydown="if (event.keyCode == 13) document.getElementById('searchButton').click()"
+               size="35"
+               class="span3 search-query"
+               id="searchField"
+               autocomplete="False"
+               autofocus="autofocus">
 
-    <input type="text" name="q" size="35" class="span3 search-query" id="inputBox" autocomplete="False">
+        <button class="btn search-query"
+                id="searchButton"
+                onclick="go(document.getElementById('searchField').value)">
+            Search</button>
 
-    <button class="btn search-query" onclick="go(document.getElementById('inputBox').value)">Search</button>
-
-
+    </div>
+    <hr>
+    <div id="searchResults" class="inner-content">
+        <ul class="list-group">
+        </ul>
+    </div>
 </div>
-
-<div id="searchResults" class="inner-content">
-    <ul>
-        <li>
-            <p> item 1</p>
-
-        </li>
-        <li>
-            <p> item 2</p>
-        </li>
-
-    </ul>
-</div>
-
-
-<script src="http://code.jquery.com/jquery.js"></script>
-<script src="../static/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

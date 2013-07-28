@@ -1,11 +1,16 @@
 import datetime
+import time
 import json
-from django.http import HttpResponse, Http404
+import django
+from tweetfetcher import TweetFetcher
+from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.shortcuts import render
 from django.template import Context
 from django.template.loader import get_template
 
 __author__ = 'Luke'
+
+__sessions = {}
 
 
 def main_page(request):
@@ -20,10 +25,30 @@ def do_search(request):
 
 
 def return_json(request):
-    request.g
-    d = {'a': 123, 'b': 124}
-    return  HttpResponse(json.dumps(d))
+    query = request.GET.get('q', '')
+    if query == '':
+        return HttpResponseBadRequest()
 
+
+    start = request.GET.get('start', 0)
+
+    global __sessions
+
+    if query not in __sessions:
+        __sessions[query] = TweetFetcher(query)
+        time.sleep(2)
+
+    fetcher = __sessions[query]
+    data = fetcher.get_tweets(start)
+    print data
+    print type(data)
+    print type(json.dumps(data))
+    return HttpResponse(json.dumps(data, ensure_ascii=False))
+
+
+# called internally
+def clean_up(request):
+    pass
 
 
 def hello(request):
@@ -46,16 +71,6 @@ def hours_ahead(request, offset):
     html = "<html><body>In %s hour(s), it will be %s.</body></html>" % (offset, dt)
     return HttpResponse(html)
 
-
-def test_json(request, query):
-    l = StdOutListener()
-    auth = OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
-
-    stream = Stream(auth, l)
-    stream.filter(track=[query])
-
-    return HttpResponse(json.dumps(l.tweets))
 
 
 
