@@ -12,20 +12,61 @@
     <link rel="shortcut icon" href="../static/twitter_icon.ico">
 
     <script>
+        var running = false;
+        var count = 0;
+        var current_query = "";
+        var intervalHandler;
+
         function go(search_query) {
             console.log('button press');
-            $.getJSON("/json", {q:search_query,start:0}, function (data) {
-                console.log('success');
-                $.each(data, function (key, value) {
-                    $("#searchResults ul").append("<li class=\"list-group-item\">" + value.id + " " + value.text +  "</li>")
-                })
-            })
+            if (running == false) {
+                running = true;
+                var iterations = 5;
+                intervalHandler = setInterval(function() {
+                    var len = $("#searchList li").size();
+                    console.log(search_query)
+                    $.getJSON("/json", {q: search_query, start: len}, function (data) {
+                        console.log('Recieving JSON');
+                        $.each(data, function (key, value) {
+                            $("#searchResults ul").append("<li class=\"list-group-item\">" + value.guid + " " + value.text + "</li>")
+                        });
+                        count++;
+                        if (count == iterations) {
+                            running = false;
+                            clearInterval(intervalHandler);
+                            console.log("stopping reached limit")
+                            count = 0;
+                        }
+                        console.log($("#searchList li").size());
+                    })
+                },5000)
+            }
+
         }
 
-        function write_letters(){
+
+{##}
+{#        function fetch(search_query) {#}
+{#            console.log('fetching' + i);#}
+{#            var len = $("#searchList li").size();#}
+{#            $.getJSON("/json", {q: search_query, start: len}, function (data) {#}
+{#                console.log('success');#}
+{#                $.each(data, function (key, value) {#}
+{#                    $("#searchResults ul").append("<li class=\"list-group-item\">" + value.guid + " " + value.text + "</li>")#}
+{#                });#}
+{#                count++;#}
+{#                if (count == iterations) {#}
+{#                    running = false;#}
+{#                    count = 0;#}
+{#                }#}
+{#                console.log($("#searchList li").size());#}
+{#            })#}
+{#        }#}
+
+        function write_letters() {
             var items = document.getElementById("itemList");
 
-            for (var i = 0; i < alphabet.length; i++ ) {
+            for (var i = 0; i < alphabet.length; i++) {
                 var item = document.createElement("li");
                 item.innerHTML = alphabet[i];
                 items.appendChild(item);
@@ -38,7 +79,7 @@
 <body>
 <div id="all">
     <div id="header">
-        <h1>Twitter Sentiment Search</h1>
+        <h1 id="title-text">Twitter Sentiment Search</h1>
 
         <br>
 
@@ -53,12 +94,13 @@
         <button class="btn search-query"
                 id="searchButton"
                 onclick="go(document.getElementById('searchField').value)">
-            Search</button>
+            Search
+        </button>
 
     </div>
     <hr>
     <div id="searchResults" class="inner-content">
-        <ul class="list-group">
+        <ul class="list-group" id="searchList">
         </ul>
     </div>
 </div>

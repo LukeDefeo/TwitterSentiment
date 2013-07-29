@@ -46,6 +46,7 @@ class TweetFetcher(StreamListener):
         self._max_tweets = max_tweets
         self._query_terms = query.split()
         self._tweets = []
+        self._count = 0
         self._alive = True
         auth = OAuthHandler(self.consumer_key, self.consumer_secret)
         auth.set_access_token(self.access_token, self.access_token_secret)
@@ -72,7 +73,9 @@ class TweetFetcher(StreamListener):
     def on_data(self, data):
         if len(self._tweets) < self._max_tweets and self._alive:
             tweet = json.loads(data)
-            self._tweets.append({'id': tweet['id'], 'text': tweet['text'], })
+            if tweet['lang'] == 'en':
+                self._tweets.append({'guid': len(self._tweets), 'id': tweet['id'], 'text': tweet['text'], })
+
             return True
         else:
             print 'Reached tweet limit ... shutdown'

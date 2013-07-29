@@ -29,9 +29,7 @@ def return_json(request):
     if query == '':
         return HttpResponseBadRequest()
 
-
     start = request.GET.get('start', 0)
-
     global __sessions
 
     if query not in __sessions:
@@ -40,9 +38,7 @@ def return_json(request):
 
     fetcher = __sessions[query]
     data = fetcher.get_tweets(start)
-    print data
-    print type(data)
-    print type(json.dumps(data))
+
     return HttpResponse(json.dumps(data, ensure_ascii=False))
 
 
