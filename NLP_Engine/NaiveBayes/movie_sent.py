@@ -1,4 +1,4 @@
-__author__ = 'Luke'
+§__author__ = 'Luke'
 
 import nltk
 import random
@@ -15,7 +15,7 @@ reviews = [(movie_reviews.words(fileid), category)
            for fileid in movie_reviews.fileids(category)]
 
 random.shuffle(reviews)
-
+a = dict()
 all_words = nltk.FreqDist(w.lower() for w in movie_reviews.words())
 common_words = all_words.keys() [:2000]
 

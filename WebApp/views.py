@@ -37,6 +37,11 @@ def return_json(request):
         time.sleep(2)
 
     fetcher = __sessions[query]
+    if not fetcher.is_alive():
+        __sessions.remove(query)
+        print "removing object"
+        return return_json(request)
+
     data = fetcher.get_tweets(start)
 
     return HttpResponse(json.dumps(data, ensure_ascii=False))
