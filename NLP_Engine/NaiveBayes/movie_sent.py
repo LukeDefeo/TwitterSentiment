@@ -1,4 +1,4 @@
-§__author__ = 'Luke'
+__author__ = 'Luke'
 
 import nltk
 import random
@@ -35,5 +35,8 @@ cut_off = int(0.8 * len(feature_set))
 train_set = feature_set[:cut_off]
 test_set = feature_set[cut_off:]
 classifier = NaiveBayesClassifier.train(train_set)
+
+print ""
+
 
 print nltk.classify.accuracy(classifier,test_set)

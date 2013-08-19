@@ -15,14 +15,19 @@ class test_tokenizer(TestCase):
             self.assertTrue(contains_url(url))
 
     def test_strip_punctuation(self):
-        words = [ 'sentence,', 'with.', 'lots?', 'of',  'strange!', 'strange', 'stange...', 'punctuation']
+        words = [ 'sentence,', 'with.', 'lots?', 'of',  'strange!!!', 'strange', 'stange...', 'punctuation']
         for word in words:
             word = strip_punctuation(word)
             self.assertTrue(char not in word for char in string.punctuation)
 
+        trick_word = strip_punctuation("father's")
+        self.assertEqual("father's",trick_word)
+
+
+
     def test_contains_foreign_chars(self):
         string1 = 'This is a regular english text '
-        string2 = 'with punctuation ! )( ; . > ? and symbols "[ {` ~ +- $'
+        string2 = 'with punctuation ! )( ; . > ? and symbols "[ {` ~ +- $'''
         string3 = 'and numbers 321 4104'
 
         self.assertFalse(contains_foreign_chars(string1))
@@ -45,6 +50,15 @@ class test_tokenizer(TestCase):
         for word in bad.split():
             self.assertTrue(contains_repeated_chars(word))
 
-if __name__ == '__main__':
-    unittest.main()
+    def test_delete_repeated_chars(self):
+        bad = ['ooooh', 'verrrrry', 'loooongggg','stunning','happyyyyy']
+        good = ['oh','very','long','stunning']
+        result = [remove_repeated_chars(word) for word in bad]
+        print result
+
+        self.assertEqual(good,result)
+
+
+    if __name__ == '__main__':
+        unittest.main()
 

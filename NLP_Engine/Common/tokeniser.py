@@ -2,6 +2,10 @@
 # -*- coding: UTF-8 -*-
 import re
 import string
+import sklearn
+
+
+
 
 __author__ = 'Luke'
 
@@ -15,7 +19,19 @@ def contains_url(word):
 
 
 def strip_punctuation(word):
-    return word.translate(None, string.punctuation)
+    while _ends_with_punct(word):
+        if len(word) == 1:
+            return ''
+        word = word[:-1]
+
+    return word
+
+
+def _ends_with_punct(word):
+    for punct in string.punctuation:
+        if word.endswith(punct):
+            return True
+    return False
 
 
 def contains_foreign_chars(word):
@@ -47,4 +63,34 @@ def contains_repeated_chars(word, pos=0):
         return False
 
 
+def remove_repeated_chars(word):
+    pos = 0
+    while len(word) - pos >= 3:
+        if word[pos] == word[pos + 1] == word[pos + 2]:
+            while word[pos] == word[pos + 1]:
+                word = delete_char(word, pos)
+                if pos == len(word) - 1:
+                    break
+        else:
+            pos += 1
+    return word
 
+
+def delete_char(word, index):
+    return word[:index] + word[index + 1:]
+
+
+def tokenise(word):
+    if contains_url(word):
+        return None
+        # if contains_repeated_chars(word):
+    #     return
+    if word[0] == '@':
+        return None
+    if '&' in word:
+        return None
+
+    word = word.lower()
+    word = strip_punctuation(word)
+    word = remove_repeated_chars(word)
+    return word

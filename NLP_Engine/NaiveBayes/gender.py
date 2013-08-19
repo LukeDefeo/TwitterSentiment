@@ -25,9 +25,10 @@ training_data = feature_set[:cut_off]
 test_data = feature_set[cut_off:]
 
 classifier = NaiveBayesClassifier.train(training_data)
+a= classifier.prob_classify(test_data[0][0])
+print test_data[0][0]
 print nltk.classify.accuracy(classifier,test_data)
-
-print classifier.show_most_informative_features()
+#print classifier.show_most_informative_features(100)
 
 
 
