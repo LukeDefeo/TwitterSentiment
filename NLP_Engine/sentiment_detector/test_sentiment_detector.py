@@ -1,11 +1,12 @@
 import cPickle as pickle
 from nltk.tag.stanford import POSTagger
-from NLP_Engine.Common.helper import extract_tags
+from NLP_Engine.sentiment_detector.sentiment_detector import extract_tags
 
 __author__ = 'Luke'
 
 
 #testing the classifyer on completely unseen training data
+svm = pickle.load(open('../../Data/Models/sentiment-detector-svm'))
 test_set = []
 with open("../../Data/Test/test-data.csv") as test_in:
     for line in test_in:
@@ -25,6 +26,5 @@ tagged_set = tagger.batch_tag([sent.split() for sent, label in test_set])
 test_data = [extract_tags(sent) for sent in tagged_set]
 
 targets = [label for sent, label in test_set]
-svm = pickle.load(open('../../Data/Models/sentiment-classifyer-svm'))
 
 print svm.score(test_data,targets)

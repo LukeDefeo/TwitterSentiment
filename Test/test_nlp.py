@@ -14,7 +14,10 @@ class TestSentiment(TestCase):
 
     def test_sentiment_detection(self):
         detecter = SentimentDetector()
-        print detecter.tweet_contains_sentiment('omg justin bieber is so amazing ')
+        self.assertTrue(detecter.tweet_contains_sentiment('omg justin bieber is so amazing '))
+        self.assertFalse(detecter.tweet_contains_sentiment(
+            'President Obama has just landed in London for the annual conference for world leaders'))
+
 
 if __name__ == '__main__':
-        unittest.main()
+    unittest.main()

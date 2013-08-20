@@ -8,8 +8,8 @@ import sklearn
 
 
 __author__ = 'Luke'
+negations = {'no', 'not', 'never', "don't", 'dont'}
 
-negations = {'no', 'not', 'never', "don't", 'dont',}
 
 def contains_url(word):
     url_pattern = r'(\S+\.(com|co\.uk|ac|info|ly|net|org|edu|gov)(\/\S+)?)|http://'
