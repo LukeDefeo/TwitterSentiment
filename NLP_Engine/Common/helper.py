@@ -1,7 +1,8 @@
 
 __author__ = 'Luke'
 
-"Code from http://stackoverflow.com/questions/323750/how-to-access-previous-next-element-while-for-looping"
+"Code for this function " \
+" from http://stackoverflow.com/questions/323750/how-to-access-previous-next-element-while-for-looping"
 def neighborhood(iterable):
     iterator = iter(iterable)
     prev = None
@@ -20,7 +21,7 @@ def extract_tags(tagged_sent):
 
     return tags
 
-
+"from tagset: http://acl.ldc.upenn.edu/J/J93/J93-2004.pdf"
 tag_index = {'CC': 0, 'CD': 1, 'DT': 2, 'EX': 3, 'FW': 4, 'IN': 5, 'JJ': 6, 'JJR': 7, 'JJS': 8, 'LS': 9, 'MD': 10,
              'NN': 11, 'NNS': 12, 'NNP': 13, 'NNPS': 14, 'PDT': 15, 'POS': 16, 'PRP': 17, 'PP$': 18, 'RB': 19,
              'RBR': 20, 'RBS': 21, 'RP': 22, 'SYM': 23, 'TO': 24, 'UH': 25, 'VB': 26, 'VBD': 27, 'VBG': 28, 'VBN': 29,

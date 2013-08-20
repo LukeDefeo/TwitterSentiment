@@ -21,5 +21,5 @@ test_target = total_target[cut_off:]
 svm = SVC()
 svm.fit(training_data, training_target)
 
-pickle.dump(svm, open('../../Data/Models/sentiment-classifyer-svm','wb'))
+pickle.dump(svm, open('../../Data/Models/sentiment-detector-svm','wb'))
 print svm.score(test_data, test_target)

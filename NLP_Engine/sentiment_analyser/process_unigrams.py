@@ -7,8 +7,8 @@ import nltk
 from nltk import NaiveBayesClassifier
 
 
-tweets = pickle.load(open("../../Data/Training/tweets.obj"))
-word_set = pickle.load((open("../../Data/Training/word_set.obj")))
+tweets = pickle.load(open("../../Data/Training/tweets-small.obj"))
+word_set = pickle.load((open("../../Data/Training/word_set-small.obj")))
 
 # tweets = pickle.load(open("../../Data/Training/tweets-small.obj"))
 # word_set = pickle.load((open("../../Data/Training/word_set-small.obj")))
@@ -20,7 +20,6 @@ def tweet_features(tweet):
     # print tokenised_words
     for prev, word, next in neighborhood(tokenised_words):
         if prev in negations:
-
             to_remove.add(prev)
             to_remove.add(word)
             tokenised_words.append('neg-' + word)
@@ -64,3 +63,5 @@ print nltk.classify.accuracy(classifier, test_set)
 
 
 print classifier.show_most_informative_features(1000)
+
+pickle.dump(classifier, open('../../Data/Models/sentiment-analyser.obj','wb'))

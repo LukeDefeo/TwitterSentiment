@@ -24,7 +24,6 @@ class test_tokenizer(TestCase):
         self.assertEqual("father's",trick_word)
 
 
-
     def test_contains_foreign_chars(self):
         string1 = 'This is a regular english text '
         string2 = 'with punctuation ! )( ; . > ? and symbols "[ {` ~ +- $'''
