@@ -8,7 +8,6 @@ from nltk.tag.stanford import POSTagger
 import time
 from sklearn import neighbors
 from sklearn.svm import SVC
-from NLP_Engine.sentiment_detector.treetagger import TreeTagger
 
 __author__ = 'Luke'
 

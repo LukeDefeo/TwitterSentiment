@@ -5,7 +5,7 @@ from NLP_Engine.Common.helper import extract_tags
 __author__ = 'Luke'
 
 
-
+#testing the classifyer on completely unseen training data
 test_set = []
 with open("../../Data/Test/test-data.csv") as test_in:
     for line in test_in:
