@@ -17,8 +17,6 @@ def add_to_dict(word):
     else:
         word_dict[word] = 1
 
-
-
 print "begin"
 with open("../../Data/Training/training-data.csv") as training_in:
     for line in training_in:
@@ -50,5 +48,5 @@ print "pickling"
 pickle.dump(tweets, open("../../Data/Training/tweets.obj", "wb"))
 pickle.dump(words, open("../../Data/Training/word_set.obj", "wb"))
 
-print "done picking " + str(time.time() - start_time) + 'seconds'
+print "done: " + str(time.time() - start_time) + 'seconds'
 

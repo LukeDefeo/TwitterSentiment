@@ -7,7 +7,6 @@ from nltk import NaiveBayesClassifier
 
 
 training_tweets = pickle.load(open("../../Data/Training/tweets-small.obj"))
-word_set = pickle.load((open("../../Data/Training/word_set-small.obj")))
 
 train_set = [(extract_tweet_features(tweet), sentiment) for (tweet, sentiment) in training_tweets]
 print 'done making training set'

@@ -25,18 +25,18 @@ class test_tokenizer(TestCase):
 
 
     def test_contains_foreign_chars(self):
-        string1 = 'This is a regular english text '
-        string2 = 'with punctuation ! )( ; . > ? and symbols "[ {` ~ +- $'''
-        string3 = 'and numbers 321 4104'
+        string1 = u'This is a regular english text '
+        string2 = u'with punctuation ! )( ; . > ? and symbols "[ {` ~ +- $'''
+        string3 = u'and numbers 321 4104'
 
         self.assertFalse(contains_foreign_chars(string1))
         self.assertFalse(contains_foreign_chars(string2))
         self.assertFalse(contains_foreign_chars(string3))
 
-        string4 = 'ó ò ñ ç ¿ ß'
+        string4 = u'ó ò ñ ç ¿ ß'
         self.assertTrue(contains_foreign_chars(string4))
 
-        string5 = 'dawd ó?'
+        string5 = u'dawd ó?'
         self.assertTrue(contains_foreign_chars(string5))
 
     def test_contains_repeated_chars(self):
@@ -51,10 +51,8 @@ class test_tokenizer(TestCase):
 
     def test_delete_repeated_chars(self):
         bad = ['ooooh', 'verrrrry', 'loooongggg','stunning','happyyyyy']
-        good = ['oh','very','long','stunning']
+        good = ['oh','very','long','stunning','happy']
         result = [remove_repeated_chars(word) for word in bad]
-        print result
-
         self.assertEqual(good,result)
 
 
