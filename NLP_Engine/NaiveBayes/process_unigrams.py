@@ -1,23 +1,33 @@
-from NLP_Engine.Common.tokeniser import tokenise
+from NLP_Engine.Common.helper import neighborhood
+from NLP_Engine.Common.tokeniser import tokenise, negations
 
 __author__ = 'Luke'
 import cPickle as pickle
 import nltk
 from nltk import NaiveBayesClassifier
 
-mode = "big"
 
-
-tweets = pickle.load(open("../../Data/Training/tweets-small.obj"))
-word_set = pickle.load((open("../../Data/Training/word_set-small.obj")))
+tweets = pickle.load(open("../../Data/Training/tweets.obj"))
+word_set = pickle.load((open("../../Data/Training/word_set.obj")))
 
 # tweets = pickle.load(open("../../Data/Training/tweets-small.obj"))
 # word_set = pickle.load((open("../../Data/Training/word_set-small.obj")))
 #
 
 def tweet_features(tweet):
-    tweet_words = tweet.split()
-    tokenised_words = set([tokenise(word) for word in tweet_words])
+    tokenised_words = [tokenise(word) for word in tweet.split()]
+    to_remove = set()
+    # print tokenised_words
+    for prev, word, next in neighborhood(tokenised_words):
+        if prev in negations:
+
+            to_remove.add(prev)
+            to_remove.add(word)
+            tokenised_words.append('neg-' + word)
+
+    tokenised_words = set(tokenised_words)
+    for word in to_remove:
+        tokenised_words.remove(word)
 
     features = {}
     for word in tokenised_words:

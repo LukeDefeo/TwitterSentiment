@@ -9,6 +9,7 @@ import sklearn
 
 __author__ = 'Luke'
 
+negations = {'no', 'not', 'never', "don't", 'dont',}
 
 def contains_url(word):
     url_pattern = r'(\S+\.(com|co\.uk|ac|info|ly|net|org|edu|gov)(\/\S+)?)|http://'
@@ -35,13 +36,7 @@ def _ends_with_punct(word):
 
 
 def contains_foreign_chars(word):
-    # pattern = r'![\w\s]'
-    # pattern2 = r'[^(\x20-\x7F)]'
-    # if re.match(pattern2, word):
-    #     return True
-    # else:
-    #     return False
-    exceptions = '£€'
+    exceptions = u'£€'
     for char in word:
         if ord(char) > 127:
             if char not in exceptions:
@@ -80,15 +75,22 @@ def delete_char(word, index):
     return word[:index] + word[index + 1:]
 
 
+def tokenise_tweet(tweet):
+
+    for word in tweet.split():
+        if contains_url(word):
+            continue
+
+
 def tokenise(word):
     if contains_url(word):
-        return None
+        return ''
         # if contains_repeated_chars(word):
     #     return
     if word[0] == '@':
-        return None
+        return ''
     if '&' in word:
-        return None
+        return ''
 
     word = word.lower()
     word = strip_punctuation(word)

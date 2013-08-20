@@ -1,3 +1,4 @@
+# coding=utf-8
 from nltk.corpus import brown
 from nltk.tag.stanford import POSTagger
 
@@ -7,11 +8,27 @@ tagger = POSTagger('stanford-model.tagger', 'stanford-postagger.jar')
 
 # print tagger.tag("what is the airspeed of an unlaiden swallow?".split())
 
-l = ["what is the airspeed of an unlaiden swallow?".split(), "Call me Luke.".split()]
+l = ["what is the airspeed of an unlaiden swallow?".split(), "Call me Luke."]
 print l
 print tagger.batch_tag(l)
 
-reviews_sent_untagged = brown.sents(categories='reviews')[0:20] + brown.sents(categories='news')[0:20]
 
-print tagger.batch_tag(reviews_sent_untagged)
 
+s= 'ok α'
+u = u'ok α'
+def whatisthis(s):
+    if isinstance(s, str):
+        print "ordinary string" + s
+    elif isinstance(s, unicode):
+        print "unicode string" + s
+    else:
+        print "not a string"
+
+
+whatisthis(s)
+whatisthis(u)
+print tagger.tag(s)
+print tagger.tag(u.encode('utf8'))
+whatisthis(u.encode('utf8'))
+whatisthis(unicode(s,'utf8'))
+print
