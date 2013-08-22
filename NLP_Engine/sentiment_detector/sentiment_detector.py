@@ -28,10 +28,10 @@ tag_index = {'CC': 0, 'CD': 1, 'DT': 2, 'EX': 3, 'FW': 4, 'IN': 5, 'JJ': 6, 'JJR
 
 
 
-def tweet_contains_sentiment(self, tweet):
-    tagged_tweet = self.pos_tagger.tag(tweet.split())
+def tweet_contains_sentiment(tweet):
+    tagged_tweet = pos_tagger.tag(tweet.split())
     tweet_tag_model = extract_tags(tagged_tweet)
-    prediction = self._svm.predict(tweet_tag_model)
+    prediction = svm.predict(tweet_tag_model)
     if prediction == 'sub':
         return True
     else:

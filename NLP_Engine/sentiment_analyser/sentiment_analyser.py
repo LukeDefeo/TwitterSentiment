@@ -12,9 +12,9 @@ word_set = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_word
 classifier = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_classifier)))
 
 
-def classify_tweet(self, tweet):
+def classify_tweet(tweet):
     feature_set = extract_tweet_features(tweet)
-    return self._classifier.classify(feature_set)
+    return classifier.classify(feature_set)
 
 
 def extract_tweet_features(tweet):
