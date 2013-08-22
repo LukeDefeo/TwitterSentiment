@@ -5,15 +5,16 @@ from NLP_Engine.Common.tokeniser import tokenise, negations
 
 
 __author__ = 'Luke'
-word_set = pickle.load(open(os.path.join(os.path.dirname(__file__), "../../Data/Training/word_set-small.obj")))
 
-class SentimentAnalyser(object):
-    def __init__(self, path_to_classifer='../../Data/Models/sentiment-analyser.obj'):
-        self._classifier = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_classifer)))
+path_to_classifier = '../../Data/Models/sentiment-analyser.obj'
+path_to_wordset = "../../Data/Training/word_set-small.obj"
+word_set = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_wordset)))
+classifier = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_classifier)))
 
-    def classify_tweet(self, tweet):
-        feature_set = extract_tweet_features(tweet)
-        return self._classifier.classify(feature_set)
+
+def classify_tweet(self, tweet):
+    feature_set = extract_tweet_features(tweet)
+    return self._classifier.classify(feature_set)
 
 
 def extract_tweet_features(tweet):

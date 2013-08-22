@@ -5,6 +5,11 @@ from nltk.tag.stanford import POSTagger
 __author__ = 'Luke'
 
 
+path_to_classifier = '../../Data/Models/sentiment-detector-svm'
+svm = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_classifier)))
+pos_tagger = POSTagger(os.path.join(os.path.dirname(__file__), 'stanford-model.tagger'),
+                       os.path.join(os.path.dirname(__file__), 'stanford-postagger.jar'), encoding='utf8')
+
 
 def extract_tags(tagged_sent):
     tags = [0] * len(tag_index)
@@ -22,18 +27,14 @@ tag_index = {'CC': 0, 'CD': 1, 'DT': 2, 'EX': 3, 'FW': 4, 'IN': 5, 'JJ': 6, 'JJR
              ':': 40, '(': 41, ')': 42, '"': 43, "'": 44, "``": 45, "''": 46, 'PRP$': 47}
 
 
-class SentimentDetector(object):
-    def __init__(self, path_to_classifier='../../Data/Models/sentiment-detector-svm'):
-        self._svm = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_classifier)))
-        self.pos_tagger = POSTagger(os.path.join(os.path.dirname(__file__), 'stanford-model.tagger'),os.path.join(os.path.dirname(__file__), 'stanford-postagger.jar') , encoding='utf8')
 
-    def tweet_contains_sentiment(self, tweet):
-        tagged_tweet = self.pos_tagger.tag(tweet.split())
-        tweet_tag_model = extract_tags(tagged_tweet)
-        prediction = self._svm.predict(tweet_tag_model)
-        if prediction == 'sub':
-            return True
-        else:
-            return False
+def tweet_contains_sentiment(self, tweet):
+    tagged_tweet = self.pos_tagger.tag(tweet.split())
+    tweet_tag_model = extract_tags(tagged_tweet)
+    prediction = self._svm.predict(tweet_tag_model)
+    if prediction == 'sub':
+        return True
+    else:
+        return False
 
 
