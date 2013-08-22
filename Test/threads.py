@@ -1,12 +1,16 @@
 import threading
 import time
 import thread
+from WebApp.tweetfetcher import Enum
 
 __author__ = 'Luke'
 
 
 
+Sentiments = Enum(['POSITIVE', 'NEGATIVE', 'OBJECTIVE', 'UNCLASSIFIED'])
 
+a = Sentiments.POSITIVE
+print a
 
 def function():
     print 'inside'

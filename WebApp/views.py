@@ -2,7 +2,7 @@ import datetime
 import time
 import json
 import django
-from tweetfetcher import TweetFetcher
+from tweetfetcher import TweetFetcher, TweetStore
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.shortcuts import render
 from django.template import Context
@@ -25,7 +25,7 @@ def do_search(request):
 
 
 def return_json(request):
-    query = request.GET.get('q', '')
+    query = request.GET .get('q', '')
     if query == '':
         return HttpResponseBadRequest()
 
@@ -33,14 +33,13 @@ def return_json(request):
     global __sessions
 
     if query not in __sessions:
-        __sessions[query] = TweetFetcher(query)
+        __sessions[query] = TweetStore(query)
         time.sleep(2)
 
     fetcher = __sessions[query]
     if not fetcher.is_alive():
         __sessions.remove(query)
         print "removing object"
-        return return_json(request)
 
     data = fetcher.get_tweets(start)
 

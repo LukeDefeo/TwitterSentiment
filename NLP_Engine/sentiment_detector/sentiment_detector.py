@@ -10,6 +10,7 @@ svm = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_classifie
 pos_tagger = POSTagger(os.path.join(os.path.dirname(__file__), 'stanford-model.tagger'),
                        os.path.join(os.path.dirname(__file__), 'stanford-postagger.jar'), encoding='utf8')
 
+print 'Sentiment Detecter ready...'
 
 def extract_tags(tagged_sent):
     tags = [0] * len(tag_index)

@@ -10,9 +10,9 @@ path_to_classifier = '../../Data/Models/sentiment-analyser.obj'
 path_to_wordset = "../../Data/Training/word_set-small.obj"
 word_set = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_wordset)))
 classifier = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_classifier)))
+print 'Sentiment Analyser ready...'
 
-
-def classify_tweet(tweet):
+def classify_tweet(tweet,query_terms=[]):
     feature_set = extract_tweet_features(tweet)
     return classifier.classify(feature_set)
 

@@ -1,78 +1,56 @@
+from NLP_Engine.sentiment_analyser.sentiment_analyser import classify_tweet
+from NLP_Engine.sentiment_detector.sentiment_detector import tweet_contains_sentiment
+
 __author__ = 'Luke'
 from tweepy.streaming import StreamListener, json
 from tweepy import OAuthHandler
 from tweepy import Stream
 
 
-def strip_tweet(tweet):
-    pass
+consumer_key = "ZYaUAuc8zNPM0BL5HgdSSg"
+consumer_secret = "x0Xpf6d6P4nHN2GYl91XOK032ppjhCYOIQCQQT9wA"
+access_token = "289934046-1sJjC4Oz1OGT3LYnKgoLGRUehicilfgzMR4TrS6v"
+access_token_secret = "qlulCQHYvEKBQFyPOHcuvrsVUalSmWh2hCHbyhv4"
 
 
-def tweet_contains_sentiment(tweet):
-    return True
-
-
-def process_sentiment(tweet):
-    pass
-
-
-# class TweetStore(object, query):
-#     def __init__(self):
-#         self._tweets = []
-#         self._tweet_fetcher = TweetFetcher()
+# class Tweet(object):
+#     def __init__(self, text, query_terms):
+#         self.text = text
+#         self.query_terms = query_terms
+#         self.contains_sentiment = None
+#         self.sentiment = None
 #
-#     def get_tweets(self, start):
-#         return self._tweets[start:]
+#     def classify(self):
+#         if self.contains_sentiment is None:
+#             self.contains_sentiment = tweet_contains_sentiment(self.text)
 #
-#     def add_tweet(self, tweet):
-#         if tweet_contains_sentiment(tweet):
-#             process_sentiment(tweet)
-#             strip_tweet(tweet)
-#             self._tweets.append(tweet)
-#
-#     def is_alive(self):
-#         return self._tweet_fetcher._alive
+#         if self.contains_sentiment is True:
+#             self.sentiment = classify_tweet(self.text, self.query_terms)
 
 
 class TweetFetcher(StreamListener):
-    consumer_key = "ZYaUAuc8zNPM0BL5HgdSSg"
-    consumer_secret = "x0Xpf6d6P4nHN2GYl91XOK032ppjhCYOIQCQQT9wA"
-
-    access_token = "289934046-1sJjC4Oz1OGT3LYnKgoLGRUehicilfgzMR4TrS6v"
-    access_token_secret = "qlulCQHYvEKBQFyPOHcuvrsVUalSmWh2hCHbyhv4"
-
-    def __init__(self, query, max_tweets=1000, ):
+    def __init__(self, query, tweetstore, max_tweets=1000):
         super(TweetFetcher, self).__init__()
+        self.tweet_store = tweetstore
         self._max_tweets = max_tweets
         self._query_terms = query.split()
         self._tweets = []
         self._count = 0
-        self.alive = True
-        auth = OAuthHandler(self.consumer_key, self.consumer_secret)
-        auth.set_access_token(self.access_token, self.access_token_secret)
+        self._alive = True
+        auth = OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(access_token, access_token_secret)
 
         self._stream = Stream(auth, self)
         self._stream.filter(track=self._query_terms, async=True)
 
-    def get_latest_tweets(self, amount=5):
-        out = []
-        for i in range(amount):
-            if self._tweets:
-                out.append(self._tweets.pop(-1))
-        return out
-
-    def get_tweets(self, start):
-        return self._tweets[int(start):]
-
-    def shutdown(self):
-        self.alive = False
-
     def on_data(self, data):
-        if len(self._tweets) < self._max_tweets and self.alive:
+        if self._count < self._max_tweets and self._alive:
             tweet = json.loads(data)
             if tweet['lang'] == 'en':
-                self._tweets.append({'guid': len(self._tweets), 'id': tweet['id'], 'text': tweet['text'], })
+                self.tweet_store.add_tweet(
+                    {'guid': self._count, 'id': tweet['id'], 'text': tweet['text'], 'query': self._query_terms})
 
+            self._count += 1
             return True
         else:
             print 'Reached tweet limit ... shutdown'
@@ -83,18 +61,29 @@ class TweetFetcher(StreamListener):
         print status
 
 
-        # def test():
-        #     fetcher = TweetFetcher('pokemon', 15)
-        #     print '1'
-        #     time.sleep(10)
-        #     for data in fetcher.get_latest_tweets():
-        #         print 'blah'
-        #         print data
-        #
-        #     print 'set 1'
-        #
-        #     for data in fetcher.get_latest_tweets():
-        #         print 'dattt'
-        #         print data
-        #
-        #     fetcher.shutdown()
+class TweetStore(object):
+    def __init__(self, query):
+        self._classified_tweets = []
+        self._objective_tweets = []
+        self._tweet_fetcher = TweetFetcher(query, self)
+        self._query = query
+
+    def get_tweets(self, start):
+        return self._classified_tweets[start:]
+
+    def add_tweet(self, tweet):
+        if tweet_contains_sentiment(tweet['text']):
+
+            sentiment = classify_tweet(tweet['text'], tweet['query'])
+            tweet['contains_sentiment'] = True
+            tweet['sentiment'] = sentiment
+            self._classified_tweets.append(tweet)
+        else:
+            tweet['contains_sentiment'] = False
+            self._objective_tweets.append(tweet)
+
+    def shutdown(self):
+        self._tweet_fetcher._alive = False
+
+    def is_alive(self):
+        return self._tweet_fetcher._alive
