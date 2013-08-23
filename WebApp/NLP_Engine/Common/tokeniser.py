@@ -5,15 +5,14 @@ import string
 import sklearn
 
 
-
-
 __author__ = 'Luke'
-negations = {'no', 'not', 'never', "don't", 'dont'}
+negations = {'no', 'not', 'never', "don't", 'dont', 'cant', "can't", 'cannot', 'wont'}
 
 
 def contains_url(word):
-    url_pattern = r'(\S+\.(com|co\.uk|ac|info|ly|net|org|edu|gov)(\/\S+)?)|http://'
-    if re.match(url_pattern, word):
+    url_pattern = r'(\S+\.(com|co\.uk|ac|info|ly|net|org|edu|gov|to|us|au)(\/\S+)?)|http://'
+    url_pattern2 = r'(\S+\.(\S+)(\/\S+))'
+    if re.match(url_pattern2, word) or re.match(url_pattern, word):
         return True
     else:
         return False
@@ -45,19 +44,6 @@ def contains_foreign_chars(word):
     return False
 
 
-def contains_repeated_chars(word, pos=0):
-    if len(word) == pos:
-        return False
-
-    if len(word) - pos >= 3:
-        if word[pos] == word[pos + 1] == word[pos + 2]:
-            return True
-        else:
-            return contains_repeated_chars(word, pos + 1)
-    else:
-        return False
-
-
 def remove_repeated_chars(word):
     pos = 0
     while len(word) - pos >= 3:
@@ -76,7 +62,6 @@ def delete_char(word, index):
 
 
 def tokenise_tweet(tweet):
-
     for word in tweet.split():
         if contains_url(word):
             continue
@@ -96,3 +81,20 @@ def tokenise(word):
     word = strip_punctuation(word)
     word = remove_repeated_chars(word)
     return word
+
+"""special case where we dont remove the repeated chars"""
+def tokenise2(word):
+    if contains_url(word):
+        return ''
+        # if contains_repeated_chars(word):
+    #     return
+    if word[0] == '@':
+        return ''
+    if '&' in word:
+        return ''
+
+    word = word.lower()
+    word = strip_punctuation(word)
+    return word
+
+

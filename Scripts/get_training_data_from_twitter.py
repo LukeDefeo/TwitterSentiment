@@ -13,7 +13,8 @@ api = tweepy.API(auth)
 
 tweets = []
 start_time = time.time()
-users = ['nytimes', 'UberFacts', 'Independent', 'World_CelebNews']
+# users = ['nytimes', 'UberFacts', 'Independent', 'World_CelebNews']
+users = ['ForbesTech','arstechnica','BBCPolitics']
 for user in users:
     print user
     for page in range(1, 17):
@@ -25,7 +26,7 @@ for user in users:
         print len(timeline)
 
 print len(tweets)
-pickle.dump(tweets, open("../Data/Training/objective-tweets.obj", "wb"))
+pickle.dump(tweets, open("../Data/Training/objective-tweets-extra.obj", "wb"))
 time_taken =   time.time() - start_time
 print "took" + str(time_taken) + "secs"
 

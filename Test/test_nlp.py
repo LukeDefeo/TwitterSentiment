@@ -1,7 +1,7 @@
-from NLP_Engine.sentiment_analyser.sentiment_analyser import classify_tweet
 from unittest import TestCase
 import unittest
-from NLP_Engine.sentiment_detector.sentiment_detector import tweet_contains_sentiment
+from WebApp.NLP_Engine.sentiment_analyser.sentiment_analyser import classify_tweet
+from WebApp.NLP_Engine.sentiment_detector.sentiment_detector import tweet_contains_sentiment
 
 __author__ = 'Luke'
 

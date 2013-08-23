@@ -5,7 +5,7 @@ __author__ = 'Luke'
 print 'start '
 
 with open("/Users/Luke/Documents/Project-Files/Training-Data/training.1600000.processed.noemoticon.csv") as input:
-    with open("/Users/Luke/Documents/PyCharmProjects/TwitterSentiment/Data/Training/training-data.csv",'w') as output:
+    with open("/WebApp/Data/Training/training-data.csv",'w') as output:
         for each_line in input:
             elements = each_line.split('","')
             elements[0] = elements[0][1:]

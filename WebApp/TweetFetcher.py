@@ -81,6 +81,7 @@ class TweetStore(object):
         else:
             tweet['contains_sentiment'] = False
             self._objective_tweets.append(tweet)
+            print self._objective_tweets
 
     def shutdown(self):
         self._tweet_fetcher._alive = False

@@ -1,20 +1,33 @@
 import cPickle as pickle
 import os
-from NLP_Engine.Common.helper import neighborhood
-from NLP_Engine.Common.tokeniser import tokenise, negations
+from WebApp.NLP_Engine.Common.helper import neighborhood, contains_negative_emoticon, contains_positive_emoticon
+from WebApp.NLP_Engine.Common.tokeniser import tokenise, negations
 
 
 __author__ = 'Luke'
 
-path_to_classifier = '../../Data/Models/sentiment-analyser.obj'
-path_to_wordset = "../../Data/Training/word_set-small.obj"
+path_to_classifier = '../../../Data/Models/sentiment-analyser.obj'
+path_to_wordset = "../../../Data/Training/word_set-small.obj"
 word_set = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_wordset)))
 classifier = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_classifier)))
 print 'Sentiment Analyser ready...'
 
-def classify_tweet(tweet,query_terms=[]):
+
+def classify_tweet(tweet, query_terms=[]):
+    empirical_result = empirical_check(tweet)
+    if empirical_result is not None:
+        return empirical_result
+
     feature_set = extract_tweet_features(tweet)
     return classifier.classify(feature_set)
+
+
+def empirical_check(tweet):
+    if contains_negative_emoticon(tweet):
+        return 'neg'
+    if contains_positive_emoticon(tweet):
+        return 'pos'
+    return None
 
 
 def extract_tweet_features(tweet):

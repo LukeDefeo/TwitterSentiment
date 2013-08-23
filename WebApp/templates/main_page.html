@@ -28,7 +28,8 @@
                     $.getJSON("/json", {q: search_query, start: len}, function (data) {
                         console.log('Recieving JSON');
                         $.each(data, function (key, value) {
-                            $("#searchResults ul").append("<li class=\"list-group-item\">" + value.guid + " " + value.text + "</li>")
+                            console.log(value.sentiment)
+                            $("#searchResults ul").append("<li class=\"list-group-item\">" + value.sentiment + " " + value.guid + " " + value.text +  "</li>")
                         });
                         count++;
                         if (count == iterations) {
@@ -58,7 +59,7 @@
             $.getJSON("/json", {q: search_query, start: len}, function (data) {
                 console.log('Recieving JSON');
                 $.each(data, function (key, value) {
-                    $("#searchResults ul").append("<li class=\"list-group-item\">" + value.guid + " " + value.text + "</li>")
+                    $("#searchResults ul").append("<li class=\"list-group-item\">" + value.sentiment + value.guid + " " + value.text + "</li>")
                 });
                 setTimeout(fetch_recursive, 5000);
             });
@@ -79,7 +80,7 @@
             $.getJSON("/json", {q: search_query, start: len}, function (data) {
                 console.log('Recieving JSON');
                 $.each(data, function (key, value) {
-                    $("#searchResults ul").append("<li class=\"list-group-item\">" + value.guid + " " + value.text + "</li>")
+                    $("#searchResults ul").append("<li class=\"list-group-item\">" + value.guid + value.sentiment + " " + value.text + "</li>")
                 });
             });
         }

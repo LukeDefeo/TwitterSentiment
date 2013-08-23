@@ -1,27 +1,36 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
+from WebApp.NLP_Engine.Common.helper import contains_rolling_letters
+from WebApp.NLP_Engine.Common.tokeniser import *
+
 __author__ = 'Luke'
 
 from unittest import TestCase
 import unittest
-from NLP_Engine.Common.tokeniser import *
 
 
 class test_tokenizer(TestCase):
 
     def test_contains_url(self):
-        urls = ['www.abc.com', 'http://www.cwac.co.uk/dwad', 'https://dwda.org/dwad', 'twitpic.com/wdadawdd','http://u.nu/9p78']
+        urls = ['www.abc.com', 'http://www.cwac.co.uk/dwad', 'https://dwda.org/dwad', 'twitpic.com/wdadawdd',
+                'http://u.nu/9p78', 'pics.byz/sfdsSF']
+        not_urls = ['test.', 'only/', 'went...', ':p']
+
         for url in urls:
             self.assertTrue(contains_url(url))
 
+        for thing in not_urls:
+            self.assertFalse(contains_url(thing))
+
+
     def test_strip_punctuation(self):
-        words = [ 'sentence,', 'with.', 'lots?', 'of',  'strange!!!', 'strange', 'stange...', 'punctuation']
+        words = ['sentence,', 'with.', 'lots?', 'of', 'strange!!!', 'strange', 'stange...', 'punctuation']
         for word in words:
             word = strip_punctuation(word)
             self.assertTrue(char not in word for char in string.punctuation)
 
         trick_word = strip_punctuation("father's")
-        self.assertEqual("father's",trick_word)
+        self.assertEqual("father's", trick_word)
 
 
     def test_contains_foreign_chars(self):
@@ -39,21 +48,12 @@ class test_tokenizer(TestCase):
         string5 = u'dawd ó?'
         self.assertTrue(contains_foreign_chars(string5))
 
-    def test_contains_repeated_chars(self):
-        good = 'good ok fine very' #what about numbers 1000?
-        bad = 'goooood fineeee :)))))) gggreat'
-
-        for word in good.split():
-            self.assertFalse(contains_repeated_chars(word))
-
-        for word in bad.split():
-            self.assertTrue(contains_repeated_chars(word))
 
     def test_delete_repeated_chars(self):
-        bad = ['ooooh', 'verrrrry', 'loooongggg','stunning','happyyyyy']
-        good = ['oh','very','long','stunning','happy']
+        bad = ['ooooh', 'verrrrry', 'loooongggg', 'stunning', 'happyyyyy']
+        good = ['oh', 'very', 'long', 'stunning', 'happy']
         result = [remove_repeated_chars(word) for word in bad]
-        self.assertEqual(good,result)
+        self.assertEqual(good, result)
 
 
     if __name__ == '__main__':
