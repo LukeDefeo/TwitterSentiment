@@ -7,7 +7,8 @@ from WebApp.NLP_Engine.Common.tokeniser import tokenise, strip_punctuation, toke
 
 __author__ = 'Luke'
 
-path_to_classifier = '../../../Data/Models/sentiment-detector-svm'
+path_to_classifier = '../../../Data/Models/sentiment-detector-svm-new'
+print 'Using detector: ' + path_to_classifier
 svm = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_classifier)))
 pos_tagger = POSTagger(os.path.join(os.path.dirname(__file__), 'stanford-model.tagger'),
                        os.path.join(os.path.dirname(__file__), 'stanford-postagger.jar'), encoding='utf8')
