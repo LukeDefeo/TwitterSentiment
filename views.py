@@ -2,11 +2,11 @@ import datetime
 import time
 import json
 import django
-from tweetfetcher import TweetStore
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.shortcuts import render
 from django.template import Context
 from django.template.loader import get_template
+from TweetFetcher import TweetStore
 
 __author__ = 'Luke'
 

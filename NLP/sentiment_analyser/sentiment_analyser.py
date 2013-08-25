@@ -1,13 +1,14 @@
 import cPickle as pickle
 import os
-from WebApp.NLP_Engine.Common.helper import neighborhood, contains_negative_emoticon, contains_positive_emoticon
-from WebApp.NLP_Engine.Common.tokeniser import tokenise, negations
+from NLP.Common.helper import neighborhood, contains_negative_emoticon, contains_positive_emoticon
+from NLP.Common.tokeniser import tokenise, negations
 
 
 __author__ = 'Luke'
 
 path_to_classifier = '../../../Data/Models/sentiment-analyser.obj'
 path_to_wordset = "../../../Data/Training/word_set-small.obj"
+print
 word_set = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_wordset)))
 classifier = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_classifier)))
 print 'Sentiment Analyser ready...'

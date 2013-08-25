@@ -2,8 +2,8 @@ import cPickle as pickle
 import os
 import re
 from nltk.tag.stanford import POSTagger
-from WebApp.NLP_Engine.Common.helper import contains_rolling_letters, contains_trigger_words, contains_caps, contains_emoticons
-from WebApp.NLP_Engine.Common.tokeniser import tokenise, strip_punctuation, tokenise2, remove_repeated_chars
+from NLP.Common.helper import contains_rolling_letters, contains_trigger_words, contains_caps, contains_emoticons
+from NLP.Common.tokeniser import tokenise, strip_punctuation, tokenise2, remove_repeated_chars
 
 __author__ = 'Luke'
 

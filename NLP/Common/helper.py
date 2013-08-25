@@ -1,5 +1,5 @@
 import re
-from WebApp.NLP_Engine.Common.tokeniser import contains_url
+from NLP.Common.tokeniser import contains_url
 
 __author__ = 'Luke'
 

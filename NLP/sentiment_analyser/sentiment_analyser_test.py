@@ -1,4 +1,4 @@
-from WebApp.NLP_Engine.sentiment_analyser.sentiment_analyser import classify_tweet
+from NLP.sentiment_analyser.sentiment_analyser import classify_tweet
 
 __author__ = 'Luke'
 

@@ -1,6 +1,6 @@
 import cPickle as pickle
 from nltk.tag.stanford import POSTagger
-from WebApp.NLP_Engine.sentiment_detector.sentiment_detector import extract_tags
+from NLP.sentiment_detector.sentiment_detector import extract_tags
 
 __author__ = 'Luke'
 
