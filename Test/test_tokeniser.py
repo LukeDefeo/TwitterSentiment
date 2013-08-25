@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from WebApp.NLP_Engine.Common.helper import contains_rolling_letters
-from WebApp.NLP_Engine.Common.tokeniser import *
+from NLP.Common.helper import contains_rolling_letters
+from NLP.Common.tokeniser import *
 
 __author__ = 'Luke'
 

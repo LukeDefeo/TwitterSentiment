@@ -1,5 +1,5 @@
-from WebApp.NLP_Engine.Common.helper import *
-from WebApp.NLP_Engine.Common.tokeniser import tokenise
+from NLP.Common.helper import *
+from NLP.Common.tokeniser import tokenise
 import unittest
 __author__ = 'Luke'
 

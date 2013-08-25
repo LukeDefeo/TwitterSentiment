@@ -1,6 +1,6 @@
 from nltk.corpus import stopwords
-from WebApp.NLP_Engine.Common.helper import neighborhood
-from WebApp.NLP_Engine.Common.tokeniser import contains_foreign_chars, negations, tokenise
+from NLP.Common.helper import neighborhood
+from NLP.Common.tokeniser import contains_foreign_chars, negations, tokenise
 
 __author__ = 'Luke'
 import time
@@ -18,7 +18,7 @@ def add_to_dict(word):
         word_dict[word] = 1
 
 print "begin"
-with open("../../../Data/Training/training-data-small.csv") as training_in:
+with open("../../Data/Training/training-data-small.csv") as training_in:
     for line in training_in:
         line = line.decode(encoding='latin1')
         sentiment, tweet_content = line.split('\t', 1)
@@ -45,8 +45,8 @@ for word in stopwords.words('english'):
 
 print "done " + str(time.time() - start_time) + 'seconds'
 print "pickling"
-pickle.dump(tweets, open("../../../Data/Training/tweets-small.obj", "wb"))
-pickle.dump(words, open("../../../Data/Training/word_set-small.obj", "wb"))
+pickle.dump(tweets, open("../../Data/Training/tweets-small.obj", "wb"))
+pickle.dump(words, open("../../Data/Training/word_set-small.obj", "wb"))
 
 print "done: " + str(time.time() - start_time) + 'seconds'
 

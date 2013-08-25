@@ -7,7 +7,7 @@ from NLP.Common.tokeniser import tokenise, strip_punctuation, tokenise2, remove_
 
 __author__ = 'Luke'
 
-path_to_classifier = '../../../Data/Models/sentiment-detector-svm-new'
+path_to_classifier = '../../Data/Models/sentiment-detector-svm'
 print 'Using detector: ' + path_to_classifier
 svm = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_classifier)))
 pos_tagger = POSTagger(os.path.join(os.path.dirname(__file__), 'stanford-model.tagger'),

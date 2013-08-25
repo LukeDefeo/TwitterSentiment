@@ -12,22 +12,6 @@ consumer_secret = "x0Xpf6d6P4nHN2GYl91XOK032ppjhCYOIQCQQT9wA"
 access_token = "289934046-1sJjC4Oz1OGT3LYnKgoLGRUehicilfgzMR4TrS6v"
 access_token_secret = "qlulCQHYvEKBQFyPOHcuvrsVUalSmWh2hCHbyhv4"
 
-
-# class Tweet(object):
-#     def __init__(self, text, query_terms):
-#         self.text = text
-#         self.query_terms = query_terms
-#         self.contains_sentiment = None
-#         self.sentiment = None
-#
-#     def classify(self):
-#         if self.contains_sentiment is None:
-#             self.contains_sentiment = tweet_contains_sentiment(self.text)
-#
-#         if self.contains_sentiment is True:
-#             self.sentiment = classify_tweet(self.text, self.query_terms)
-
-
 class TweetFetcher(StreamListener):
     def __init__(self, query, tweetstore, max_tweets=1000):
         super(TweetFetcher, self).__init__()

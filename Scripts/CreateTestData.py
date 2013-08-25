@@ -4,7 +4,7 @@ __author__ = 'Luke'
 print 'start '
 
 with open("/Users/Luke/Documents/Project-Files/Test-Data/testdata.manual.2009.06.14.csv") as input:
-    with open("/WebApp/Data/Test/test-data.csv",'w') as output:
+    with open("../Data/Test/test-data.csv",'w+') as output:
         for each_line in input:
             elements = each_line.split('","')
             elements[0] = elements[0][1:]

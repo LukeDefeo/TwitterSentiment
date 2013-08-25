@@ -1,14 +1,14 @@
 import cPickle as pickle
 from sklearn.svm import SVC
-from WebApp.NLP_Engine.sentiment_detector.sentiment_detector import extract_tags
+from NLP.sentiment_detector.sentiment_detector import extract_tags
 
 
 __author__ = 'Luke'
 
-source = pickle.load(open('../../../Data/Training/sentiment_detector_training.obj'))
-extra = pickle.load(open('../../../Data/Training/sentiment_detector_training-extra.obj'))
+source = pickle.load(open('../../Data/Training/sentiment_detector_training.obj'))
+# extra = pickle.load(open('../../Data/Training/sentiment_detector_training-extra.obj'))
 
-source += extra
+# source += extra
 tagged_set, total_target = zip(*source)
 
 total_data = [extract_tags(sent) for sent in tagged_set]
@@ -23,5 +23,5 @@ test_target = total_target[cut_off:]
 svm = SVC()
 svm.fit(training_data, training_target)
 
-pickle.dump(svm, open('../../../Data/Models/sentiment-detector-svm-new','wb'))
+pickle.dump(svm, open('../../Data/Models/sentiment-detector-svm','wb'))
 print svm.score(test_data, test_target)

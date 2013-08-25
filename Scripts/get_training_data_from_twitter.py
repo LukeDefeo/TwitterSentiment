@@ -13,8 +13,9 @@ api = tweepy.API(auth)
 
 tweets = []
 start_time = time.time()
-# users = ['nytimes', 'UberFacts', 'Independent', 'World_CelebNews']
-users = ['ForbesTech','arstechnica','BBCPolitics']
+users = ['nytimes', 'UberFacts', 'Independent', 'World_CelebNews']
+users += ['ForbesTech','arstechnica','BBCPolitics']
+print users
 for user in users:
     print user
     for page in range(1, 17):
