@@ -1,0 +1,64 @@
+body {
+    padding-top: 50px;
+    width: 90%;
+}
+
+.starter-template {
+    padding: 40px 15px;
+}
+
+.text-area {
+    margin-left: 6%;
+    margin-right: 6%;
+    width: 90%;
+
+
+}
+
+.list-heading {
+    font: bold;
+    font-size: x-large;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.hide {
+    display: none;
+}
+
+.pos-heading {
+    color: forestgreen;
+}
+.neg-heading {
+    color: red;
+}
+
+.search-box {
+    width: 300px;
+    height: 30px;
+    text-align: center;
+
+}
+
+.border {
+    border: #000000;
+}
+
+.left-list {
+    width: 150px;
+    height: 20px;
+}
+
+.padded {
+    padding-left: 300px;
+}
+
+.content
+{
+    margin-right: auto;
+    margin-left: auto;
+    width: 200px;
+    float:none;
+
+
+}

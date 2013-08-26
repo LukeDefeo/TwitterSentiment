@@ -43,7 +43,6 @@ function writeToList(value, listID) {
 function fetch_recursive() {
     var len = getTotalNoItems();
     var search_query = $("#searchField").val();
-
     if (len > 20) {
         console.log("done");
         return

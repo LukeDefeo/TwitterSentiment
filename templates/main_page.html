@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Twitter Sentiment Search</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/bootstrap-3.0.0/dist/css/bootstrap.css" rel="stylesheet">
+    <script src="../static/page-logic.js"></script>
+    <script src="../static/tweet_fetching.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="../static/bootstrap3-starter.css" rel="stylesheet">
+
+</head>
+
+<body onload="">
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">Twitter Sentient Search</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li id="navSearch" class="active"><a href="javascript:showSearchResults()">Search</a></li>
+                <li id="navAbout"><a href="javascript:showAbout()">About</a></li>
+                <li id="navContact"><a href="javascript:showContact()">Contact</a></li>
+
+            </ul>
+            <form action="#" onsubmit="processInput();return false" class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input autofocus="true" id="searchField" type="text" placeholder="Enter Search Query..." class="form-control">
+                </div>
+
+                <button id="searchButton" type="submit" class="btn btn-default">Search</button>
+            </form>
+        </div>
+        <!--/.navbar-collapse -->
+    </div>
+</div>
+
+<br>
+<br>
+
+<div id="welcomeMessage" class="text-area">
+    <h4> Welcome to Twitter sentiment analysis, enter a query above to begin.
+    </h4>
+</div>
+
+<div id="aboutMessage" class="text-area hide">
+    <h4> More details
+    </h4>
+</div>
+
+<div id="contactMessage" class="text-area hide">
+    <h4> Contact me at lme223@bham.ac.uk
+    </h4>
+</div>
+
+
+<div id="searchResultsContainer" class="container border padded hide">
+
+    <div class="">
+        <ul class="list-unstyled col-md-5">
+            <li class="list-heading pos-heading"> 55%</li>
+            <li class="list-group">
+                Blah blah blah happy hapy Blah blah blah happy hapyBlah blah blah happy hapyBlah blah blah happy hapy
+            </li>
+            <li class="list-group">
+                Blah blah blah happy hapy good good Blah blah blah happy hapy good good good
+
+            </li>
+
+        </ul>
+        <ul class="list-unstyled col-md-5">
+            <li class="list-heading neg-heading"> 45%</li>
+
+            <li class="list-group">
+                fml hate sony fml hate sonyfml hate sonyfml hate sonyfml hate sonyfml hate sonyfml hate sonyfml hate
+                sony
+            </li>
+
+            <li class="list-group">
+                fml hate sonyfml hate sonyfml hate sonyfml hate sonyfml hate sonyfml hate sonyfml hate sony
+            </li>
+
+        </ul>
+    </div>
+
+
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../static/jquery-1.7.1.min.js"></script>
+<script src="../static/bootstrap-3.0.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

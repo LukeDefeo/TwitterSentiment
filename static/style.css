@@ -9,6 +9,11 @@ body
     height: 30px;
 }
 
+
+.border {
+    border: #000000;
+}
+
 #all
 {
     margin-left:auto;
@@ -19,6 +24,14 @@ body
 #title-text
 {
     color: #000000;
+
+}
+
+#my-list
+{
+    list-style-type: none;
+    display: inline-block;
+    width: auto;
 
 }
 
