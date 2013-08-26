@@ -35,15 +35,13 @@ def return_json(request):
     if query not in __sessions:
         print 'creating new object for ' + query
         __sessions[query] = TweetStore(query)
-        time.sleep(2)
 
     fetcher = __sessions[query]
-    if not fetcher.is_alive():
-        __sessions.remove(query)
-        print "removing object"
+
 
     print 'start ='  + str(start)
-    data = fetcher.get_tweets(start)
+
+    data = fetcher.get_latest_tweets(start)
     print data
     print 'Returning reponse'
     return HttpResponse(json.dumps(data, ensure_ascii=False))

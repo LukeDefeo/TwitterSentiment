@@ -9,6 +9,6 @@ while True:
     print ' '
     sentence = raw_input('Enter sentence to classify')
     if tweet_contains_sentiment(sentence):
-        print 'Contains a ' + classify_tweet(sentence) + 'isitive sentiment'
+        print 'Contains a ' + classify_tweet(sentence) + 'itive sentiment'
     else:
         print "Doesn't contain a sentiment"

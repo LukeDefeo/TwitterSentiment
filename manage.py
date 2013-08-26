@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 import os
 import sys
-print ' hello'
+import NLP.sentiment_analyser.sentiment_analyser
+import NLP.sentiment_detector.sentiment_detector
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 
