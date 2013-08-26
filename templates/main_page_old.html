@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Twitter Sentiment Analysis</title>
+
+    <script src="../static/jquery-1.7.1.min.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="../static/bootstrap-3.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/static/style.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="../static/twitter_icon.ico">
+    <script type="text/javascript" src="../static/script.js"></script>
+
+
+</head>
+
+<body>
+<div id="all">
+    <div id="header">
+        <h1 id="title-text">Twitter Sentiment Search</h1>
+
+        <br>
+
+        <input type="text"
+               onkeydown="if (event.keyCode == 13) document.getElementById('searchButton').click()"
+               size="35"
+               class="span3 search-query"
+               id="searchField"
+               autocomplete="False"
+               autofocus="autofocus">
+
+        <button class="btn search-query"
+                id="searchButton"
+                onclick="processInput()">
+            Search
+        </button>
+
+    </div>
+    <hr>
+    <span style="width: 9em">
+       <ul class="my-list list-group" id="posList">
+           <li class="list-group-item">item one</li>
+           <li>post item 2</li>
+       </ul>
+
+       <ul class="list-group my-list" id="negList">
+           <li>baddd</li>
+           <li>terrible</li>
+       </ul>
+    </span>
+{#    <div id="searchResults" class="inner-content">#}
+{#        <ul class="list-group" id="searchList">#}
+{#        </ul>#}
+{#    </div>#}
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="span6">
+            <h3>List 2 Heading</h3>
+            <ul>
+                <li>Result 1</li>
+                <li>Result 2</li>
+                ...
+                <li>Result n</li>
+            </ul>
+        </div>
+        <div class="span6">
+            <h3>List 2 Heading</h3>
+            <ul class="span3">
+                <li>ResultResultResultResultResultResultResultResultResultResultResultResultResultResultResultResultResult 1</li>
+                <li>Result 2</li>
+                ...
+                <li>Result n</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
