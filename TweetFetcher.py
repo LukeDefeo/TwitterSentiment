@@ -1,3 +1,6 @@
+from Queue import Queue
+import threading
+
 __author__ = 'Luke'
 from TwitterSearch import TwitterSearchOrder, TwitterSearch, TwitterSearchException
 from NLP.sentiment_analyser.sentiment_analyser import classify_tweet
@@ -27,7 +30,6 @@ class TweetFetcher(object):
         output = []
         try:
             for tweet in self.twitter_search.searchTweetsIterable(self.tso):
-                print tweet['text']
                 self.GUID += 1
                 if self.GUID > self.MAX_TWEETS:
                     break
@@ -40,15 +42,25 @@ class TweetFetcher(object):
         return output
 
 
+def get_slice(list_in, count):
+    output = []
+    for i in range(count):
+        if len(list_in) > 0:
+            output.append(list_in.pop())
+
+    return output
+
+
 class TweetStore(object):
     def __init__(self, query):
         self._classified_tweets = []
         self._objective_tweets = []
         self._tweet_fetcher = TweetFetcher(query)
-        self._query = query
+        self.query = query
+        self._unclassified_tweets = self._tweet_fetcher.get_tweets()
 
     def classify_batch(self):
-        tweets = self._tweet_fetcher.get_tweets()
+        tweets = get_slice(self._unclassified_tweets, 10)
         for tweet in tweets:
             if tweet_contains_sentiment(tweet['text']):
                 sentiment = classify_tweet(tweet['text'], tweet['query'])
@@ -60,6 +72,32 @@ class TweetStore(object):
                 self._objective_tweets.append(tweet)
                 print "OBJECTIVE TWEET " + tweet['text']
 
+    def tweets_remain(self):
+        if len(self._unclassified_tweets) > 0:
+            return True
+        else:
+            return False
+
     def get_latest_tweets(self, start):
         return self._classified_tweets[start:]
 
+
+class TweetProcessor(threading.Thread):
+
+    def __init__(self, group=None, target=None, name=None, args=(), kwargs=None, verbose=None):
+        super(TweetProcessor, self).__init__(group, target, name, args, kwargs, verbose)
+        self.work_queue = Queue()
+        self.daemon = True
+
+    def addJob(self,store):
+        self.work_queue.put(store)
+
+    def run(self):
+        super(TweetProcessor, self).run()
+        while True:
+            store = self.work_queue.get()
+            store.classify_batch()
+            if store.tweets_remain():
+                self.work_queue.put(store)
+            else:
+                print 'done classifying ' + store.query

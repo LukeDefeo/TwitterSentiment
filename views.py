@@ -6,12 +6,13 @@ from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.shortcuts import render
 from django.template import Context
 from django.template.loader import get_template
-from TweetFetcher import TweetStore
+from TweetFetcher import TweetStore, TweetProcessor
 
 __author__ = 'Luke'
 
 __sessions = {}
-
+processor = TweetProcessor()
+processor.start()
 
 def main_page(request):
     return render(request, 'main_page.html')
@@ -34,10 +35,12 @@ def return_json(request):
 
     if query not in __sessions:
         print 'creating new object for ' + query
-        __sessions[query] = TweetStore(query)
+        store = TweetStore(query)
+        __sessions[query] = store
+        processor.addJob(store)
+        time.sleep(2)
 
     fetcher = __sessions[query]
-
 
     print 'start ='  + str(start)
 

@@ -32,7 +32,13 @@ def contains_caps(tweet, threshold=0.35):
         if 97 <= ord(char) <= 122:
             lower_ascii += 1
 
-    return float(upper_ascii / lower_ascii) > threshold
+    result = 0
+    try:
+         result = float(upper_ascii / lower_ascii) > threshold
+    except Exception as e:
+        pass
+
+    return result
 
 
 def contains_rolling_letters(word, pos=0):
