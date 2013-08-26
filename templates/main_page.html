@@ -16,7 +16,6 @@
         var firstRun = true;
         var count = 0;
         var current_query = "";
-        var intervalHandler;
 
         function processInput() {
             console.log("enter pressed")
@@ -35,7 +34,6 @@
                     $("#searchList").empty()
                     current_query = search_query
                 }
-
             }
             fetch_recursive()
         }
@@ -62,25 +60,7 @@
             });
         }
 
-{#        function fetch() {#}
-{#            var search_query = $("#searchField").val();#}
-{#            var len = $("#searchList li").size();#}
-{##}
-{#            if (search_query != current_query) {#}
-{#                //clear list#}
-{#                console.log("clear list");#}
-{#                current_query = search_query#}
-{#            }#}
-{##}
-{#            $.getJSON("/json", {q: search_query, start: len}, function (data) {#}
-{#                console.log('Recieving JSON');#}
-{#                $.each(data, function (key, value) {#}
-{#                    $("#searchResults ul").append("<li class=\"list-group-item\">" + value.guid + value.sentiment + " " + value.text + "</li>")#}
-{#                });#}
-{#            });#}
-{#        }#}
-{##}
-{##}
+
 {#        $(document).scroll(function () {#}
 {#            if ($(window).scrollTop() + $(window).height() == $(document).height()) {#}
 {#                console.log("scroll fetch")#}
@@ -89,23 +69,6 @@
 {#        });#}
 
 
-        {##}
-        {#        function fetch(search_query) {#}
-        {#            console.log('fetching' + i);#}
-        {#            var len = $("#searchList li").size();#}
-        {#            $.getJSON("/json", {q: search_query, start: len}, function (data) {#}
-        {#                console.log('success');#}
-        {#                $.each(data, function (key, value) {#}
-        {#                    $("#searchResults ul").append("<li class=\"list-group-item\">" + value.guid + " " + value.text + "</li>")#}
-        {#                });#}
-        {#                count++;#}
-        {#                if (count == iterations) {#}
-        {#                    running = false;#}
-        {#                    count = 0;#}
-        {#                }#}
-        {#                console.log($("#searchList li").size());#}
-        {#            })#}
-        {#        }#}
 
         function write_letters() {
             var items = document.getElementById("itemList");
