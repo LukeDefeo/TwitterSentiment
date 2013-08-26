@@ -1,5 +1,6 @@
 from Queue import Queue
 import threading
+from NLP.Common.helper import pop_slice
 
 __author__ = 'Luke'
 from TwitterSearch import TwitterSearchOrder, TwitterSearch, TwitterSearchException
@@ -42,13 +43,7 @@ class TweetFetcher(object):
         return output
 
 
-def get_slice(list_in, count):
-    output = []
-    for i in range(count):
-        if len(list_in) > 0:
-            output.append(list_in.pop())
 
-    return output
 
 
 class TweetStore(object):
@@ -60,7 +55,7 @@ class TweetStore(object):
         self._unclassified_tweets = self._tweet_fetcher.get_tweets()
 
     def classify_batch(self):
-        tweets = get_slice(self._unclassified_tweets, 10)
+        tweets = pop_slice(self._unclassified_tweets, 10)
         for tweet in tweets:
             if tweet_contains_sentiment(tweet['text']):
                 sentiment = classify_tweet(tweet['text'], tweet['query'])

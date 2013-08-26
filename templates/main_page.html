@@ -13,85 +13,80 @@
 
     <script>
         var running = false;
+        var firstRun = true;
         var count = 0;
         var current_query = "";
         var intervalHandler;
 
-        function go(search_query) {
-            console.log('button press');
-            if (running == false) {
-                running = true;
-                var iterations = 5;
-                intervalHandler = setInterval(function () {
-                    var len = $("#searchList li").size();
-                    console.log(search_query)
-                    $.getJSON("/json", {q: search_query, start: len}, function (data) {
-                        console.log('Recieving JSON');
-                        $.each(data, function (key, value) {
-                            console.log(value.sentiment)
-                            $("#searchResults ul").append("<li class=\"list-group-item\">" + value.sentiment + " " + value.guid + " " + value.text +  "</li>")
-                        });
-                        count++;
-                        if (count == iterations) {
-                            running = false;
-                            clearInterval(intervalHandler);
-                            console.log("stopping reached limit")
-                            count = 0;
-                        }
-                        console.log($("#searchList li").size());
-                    })
-                }, 5000)
-            }
-
-        }
-
-        function fetch_recursive() {
-
+        function processInput() {
+            console.log("enter pressed")
             var search_query = $("#searchField").val();
-            var len = $("#searchList li").size();
-            if (search_query != current_query) {
-                //clear list
-                console.log("clear list");
-                current_query = search_query
+
+            if (search_query == "") {
                 return
             }
 
+            if (search_query != current_query) {
+                if(firstRun) {
+                    firstRun = false
+                } else {
+                    //clear list
+                    console.log("clear list");
+                    $("#searchList").empty()
+                    current_query = search_query
+                }
+
+            }
+            fetch_recursive()
+        }
+
+
+        function writeToList(value) {
+            $("#searchResults ul").append("<li class=\"list-group-item\">" + value.sentiment + value.guid + " " + value.text + "</li>")
+        }
+
+        function fetch_recursive() {
+            var len = $("#searchList li").length;
+            var search_query = $("#searchField").val();
+
+            if (len > 20) {
+                console.log("done");
+                return
+            }
             $.getJSON("/json", {q: search_query, start: len}, function (data) {
                 console.log('Recieving JSON');
                 $.each(data, function (key, value) {
-                    $("#searchResults ul").append("<li class=\"list-group-item\">" + value.sentiment + value.guid + " " + value.text + "</li>")
+                    writeToList(value)
                 });
                 setTimeout(fetch_recursive, 5000);
             });
-
-
         }
 
-        function fetch() {
-            var search_query = $("#searchField").val();
-            var len = $("#searchList li").size();
-
-            if (search_query != current_query) {
-                //clear list
-                console.log("clear list");
-                current_query = search_query
-            }
-
-            $.getJSON("/json", {q: search_query, start: len}, function (data) {
-                console.log('Recieving JSON');
-                $.each(data, function (key, value) {
-                    $("#searchResults ul").append("<li class=\"list-group-item\">" + value.guid + value.sentiment + " " + value.text + "</li>")
-                });
-            });
-        }
-
-
-        $(document).scroll(function () {
-            if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+{#        function fetch() {#}
+{#            var search_query = $("#searchField").val();#}
+{#            var len = $("#searchList li").size();#}
+{##}
+{#            if (search_query != current_query) {#}
+{#                //clear list#}
+{#                console.log("clear list");#}
+{#                current_query = search_query#}
+{#            }#}
+{##}
+{#            $.getJSON("/json", {q: search_query, start: len}, function (data) {#}
+{#                console.log('Recieving JSON');#}
+{#                $.each(data, function (key, value) {#}
+{#                    $("#searchResults ul").append("<li class=\"list-group-item\">" + value.guid + value.sentiment + " " + value.text + "</li>")#}
+{#                });#}
+{#            });#}
+{#        }#}
+{##}
+{##}
+{#        $(document).scroll(function () {#}
+{#            if ($(window).scrollTop() + $(window).height() == $(document).height()) {#}
 {#                console.log("scroll fetch")#}
 {#                fetch()#}
-            }
-        });
+{#            }#}
+{#        });#}
 
 
         {##}
@@ -142,7 +137,7 @@
 
         <button class="btn search-query"
                 id="searchButton"
-                onclick="fetch_recursive()">
+                onclick="processInput()">
             Search
         </button>
 

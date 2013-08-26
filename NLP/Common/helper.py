@@ -78,3 +78,11 @@ def contains_negative_emoticon(tweet):
     pattern = ur'((?::|;|=)(?:-)?(?:\/|\(|\[|\{|S|s))'
     return re.search(pattern, tweet)
 
+
+def pop_slice(list_in, count):
+    output = []
+    for i in range(count):
+        if len(list_in) > 0:
+            output.append(list_in.pop())
+
+    return output

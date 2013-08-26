@@ -16,12 +16,8 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^hello/$', hello),
-    url(r'^date/$', current_datetime),
-    url(r'^time/plus/(\d{1,2})/$', hours_ahead),
     # url(r'^tweet/(\w{1,100})/$', test_json),
-    url(r'^search/$', do_search),
-    url(r'^json$', return_json)
+        url(r'^json$', return_json)
 
 
 
