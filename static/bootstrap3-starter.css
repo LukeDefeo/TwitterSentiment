@@ -3,6 +3,9 @@ body {
     width: 90%;
 }
 
+h4 {
+
+}
 .starter-template {
     padding: 40px 15px;
 }
@@ -14,12 +17,11 @@ body {
 
 
 }
-
 .list-heading {
-    font: bold;
-    font-size: x-large;
+    font: bolder;
+    font-size: xx-large;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .hide {
@@ -40,17 +42,18 @@ body {
 
 }
 
-.border {
-    border: #000000;
-}
-
 .left-list {
     width: 150px;
     height: 20px;
 }
 
+.myList {
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
 .padded {
-    padding-left: 300px;
+    padding-left: 200px;
 }
 
 .content

@@ -40,13 +40,13 @@
             </ul>
             <form action="#" onsubmit="processInput();return false" class="navbar-form navbar-right">
                 <div class="form-group">
-                    <input autofocus="true" id="searchField" type="text" placeholder="Enter Search Query..." class="form-control">
+                    <input autofocus="true" id="searchField" type="text" placeholder="Enter Search Query..."
+                           class="form-control">
                 </div>
 
                 <button id="searchButton" type="submit" class="btn btn-default">Search</button>
             </form>
         </div>
-        <!--/.navbar-collapse -->
     </div>
 </div>
 
@@ -64,42 +64,25 @@
 </div>
 
 <div id="contactMessage" class="text-area hide">
-    <h4> Contact me at lmd223@bham.ac.uk
+    <h4> Written by luke De Feo whilst studying at the University of Birmingham, Special thanks to Mark Lee.
+        <br> For comments, suggestions or bug reports Contact me at lmd223@bham.ac.uk
     </h4>
 </div>
 
+<div id="searchResultsContainer" class="container padded hide">
 
-<div id="searchResultsContainer" class="container border padded hide">
+    <div id="posScore" class="col-md-6 text-center list-heading pos-heading">
 
-    <div class="">
-        <ul class="list-unstyled col-md-5">
-            <li class="list-heading pos-heading"> 55%</li>
-            <li class="list-group">
-                Blah blah blah happy hapy Blah blah blah happy hapyBlah blah blah happy hapyBlah blah blah happy hapy
-            </li>
-            <li class="list-group">
-                Blah blah blah happy hapy good good Blah blah blah happy hapy good good good
-
-            </li>
-
-        </ul>
-        <ul class="list-unstyled col-md-5">
-            <li class="list-heading neg-heading"> 45%</li>
-
-            <li class="list-group">
-                fml hate sony fml hate sonyfml hate sonyfml hate sonyfml hate sonyfml hate sonyfml hate sonyfml hate
-                sony
-            </li>
-
-            <li class="list-group">
-                fml hate sonyfml hate sonyfml hate sonyfml hate sonyfml hate sonyfml hate sonyfml hate sony
-            </li>
-
-        </ul>
     </div>
+    <div id="negScore" class="col-md-6 text-center list-heading neg-heading">
 
-
+    </div>
+    <ul id="posList" class="list-unstyled col-md-6 myList">
+    </ul>
+    <ul id="negList" class="list-unstyled col-md-6 myList">
+    </ul>
 </div>
+
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

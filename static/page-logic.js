@@ -24,7 +24,6 @@ var current_nav = Navigation.navSearch;
 
 
 function showSearchResults() {
-    console.log('showing about page');
     showContent(Pages.searchResultsContainer);
     changeNavBar(Navigation.navSearch)
 }
@@ -47,7 +46,6 @@ function showContact() {
 
 
 function showContent(newPage) {
-    console.log(current_page)
     $(current_page).addClass('hide');
     $(newPage).removeClass('hide');
     current_page = newPage
@@ -55,7 +53,6 @@ function showContent(newPage) {
 
 
 function changeNavBar(newPage) {
-    console.log(current_nav)
     if(current_nav != newPage) {
         $(newPage).addClass('active');
         $(current_nav).removeClass('active');

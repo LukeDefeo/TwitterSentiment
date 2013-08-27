@@ -8,15 +8,20 @@
 var running = false;
 var firstRun = true;
 var count = 0;
+var posCount = 0;
+var negCount = 0;
 var current_query = "";
 
 function processInput() {
-    console.log("enter pressed")
+    console.log(current_query)
+    console.log(firstRun)
     var search_query = $("#searchField").val();
-
     if (search_query == "") {
         return
     }
+    showSearchResults();
+    console.log("enter pressed");
+
 
     if (search_query != current_query) {
         if (firstRun) {
@@ -26,8 +31,8 @@ function processInput() {
             console.log("clear list");
             $("#posList").empty();
             $("#negList").empty();
-            current_query = search_query
         }
+        current_query = search_query
     }
     fetch_recursive()
 }
@@ -37,12 +42,24 @@ function getTotalNoItems() {
 
 
 function writeToList(value, listID) {
-    $(listID).prepend("<li>" + value.text + "<li>")
+    $(listID).append('<li class="list-group">' + value.text + '<li>');
+    count++;
+
+}
+
+function recalculateScore() {
+    var posScore = Math.round((100 * (posCount / count))).toString();
+    var negScore = Math.round((100 * (negCount / count))).toString();
+    $('#posScore').html(posScore + '%');
+    $('#negScore').html(negScore + '%')
+
+
 }
 
 function fetch_recursive() {
-    var len = getTotalNoItems();
+    var len = count;
     var search_query = $("#searchField").val();
+    console.log(len)
     if (len > 20) {
         console.log("done");
         return
@@ -51,11 +68,14 @@ function fetch_recursive() {
         console.log('Recieving JSON');
         $.each(data, function (key, value) {
             if (value.sentiment == "pos") {
+                posCount++;
                 writeToList(value, "#posList")
             } else if (value.sentiment == "neg") {
+                negCount++;
                 writeToList(value, "#negList")
             }
         });
+        recalculateScore();
         setTimeout(fetch_recursive, 5000);
     });
 }
