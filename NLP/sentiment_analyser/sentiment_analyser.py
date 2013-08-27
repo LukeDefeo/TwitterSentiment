@@ -5,7 +5,6 @@ from NLP.Common.tokeniser import tokenise, negations
 
 
 __author__ = 'Luke'
-
 path_to_classifier = '../../Data/Models/sentiment-analyser.obj'
 path_to_wordset = "../../Data/Training/word_set-small.obj"
 print
@@ -19,7 +18,7 @@ def classify_tweet(tweet, query_terms=[]):
     if empirical_result is not None:
         return empirical_result
 
-    feature_set = extract_tweet_features(tweet)
+    feature_set = extract_tweet_features(tweet, query_terms)
     return classifier.classify(feature_set)
 
 
@@ -31,8 +30,13 @@ def empirical_check(tweet):
     return None
 
 
-def extract_tweet_features(tweet):
+def extract_tweet_features(tweet, query_terms=[]):
     tokenised_words = [tokenise(word) for word in tweet.split()]
+    for word in query_terms:
+        try:
+            tokenised_words.remove(word)
+        except Exception as e:
+            print 'failed to remove query term'
     to_remove = set()
     for prev, word, next in neighborhood(tokenised_words):
         if prev in negations:

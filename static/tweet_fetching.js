@@ -49,7 +49,7 @@ function getTotalNoItems() {
 
 
 function writeToList(value, listID) {
-    $(listID).append('<li class="list-group">' + value.text + '<li>');
+    $(listID).append('<li class="list-group">' + value.sentiment + value.text + '<li>');
     count++;
 
 }
@@ -67,7 +67,7 @@ function fetch_recursive() {
     var len = count;
     var search_query = $("#searchField").val();
     console.log(len)
-    if (len > 20) {
+    if (len >= 20) {
         console.log("done");
         return
     }
