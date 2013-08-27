@@ -1,5 +1,6 @@
 import cPickle as pickle
 import os
+import math
 from NLP.Common.helper import neighborhood, contains_negative_emoticon, contains_positive_emoticon
 from NLP.Common.tokeniser import tokenise, negations
 
@@ -11,6 +12,19 @@ print
 word_set = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_wordset)))
 classifier = pickle.load(open(os.path.join(os.path.dirname(__file__), path_to_classifier)))
 print 'Sentiment Analyser ready...'
+
+
+def classify_tweet_better(tweet, query_terms):
+    feature_set = extract_tweet_features(tweet, query_terms)
+    probabilities = classifier.prob_classify(feature_set)
+    neg_prob = math.pow(10, probabilities._prob_dict['neg'])
+    pos_prob = math.pow(10, probabilities._prob_dict['pos'])
+    confidence = math.fabs(neg_prob - pos_prob)
+    print str(confidence) + probabilities.max()
+    if confidence > 0.3:
+        return probabilities.max()
+    else:
+        return 'unsure'
 
 
 def classify_tweet(tweet, query_terms=[]):
@@ -36,7 +50,8 @@ def extract_tweet_features(tweet, query_terms=[]):
         try:
             tokenised_words.remove(word)
         except Exception as e:
-            print 'failed to remove query term'
+            pass
+
     to_remove = set()
     for prev, word, next in neighborhood(tokenised_words):
         if prev in negations:

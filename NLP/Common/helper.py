@@ -1,5 +1,5 @@
 import re
-from NLP.Common.tokeniser import contains_url
+from NLP.Common.tokeniser import contains_url, promotional
 
 __author__ = 'Luke'
 
@@ -62,6 +62,11 @@ def contains_trigger_words(tweet_tokens):
 
     return False
 
+def contains_promotional_words(tweet_tokens):
+    for word in tweet_tokens:
+        if word in promotional:
+            return True
+    return False
 
 '''loosely based on http://stackoverflow.com/questions/5862490/how-to-match-emoticons-with-regular-expressions'''
 def contains_emoticons(tweet):

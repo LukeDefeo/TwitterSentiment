@@ -2,8 +2,8 @@ import cPickle as pickle
 import os
 import re
 from nltk.tag.stanford import POSTagger
-from NLP.Common.helper import contains_rolling_letters, contains_trigger_words, contains_caps, contains_emoticons
-from NLP.Common.tokeniser import tokenise, strip_punctuation, tokenise2, remove_repeated_chars
+from NLP.Common.helper import contains_rolling_letters, contains_trigger_words, contains_caps, contains_emoticons, contains_promotional_words
+from NLP.Common.tokeniser import tokenise, strip_punctuation, tokenise2, remove_repeated_chars, contains_url
 
 __author__ = 'Luke'
 
@@ -34,33 +34,46 @@ tag_index = {'CC': 0, 'CD': 1, 'DT': 2, 'EX': 3, 'FW': 4, 'IN': 5, 'JJ': 6, 'JJR
 
 def empirical_check(tweet):
     tokens = [tokenise2(word) for word in tweet.split()]
+
+    if contains_promotional_words(tokens):
+        print 'contains promo words'
+        return 'obj'
+
     for token in tokens:
         if contains_rolling_letters(token):
+            print 'contains rolling letters'
             return 'sub'
 
     tokens = [remove_repeated_chars(token) for token in tokens]
+    tokens = [token for token in tokens if not contains_url(token)]
     if contains_trigger_words(tokens):
+        print 'contains trigger word'
         return 'sub'
 
+    tweet = ' '.join(tokens)
     if contains_caps(tweet):
+        print 'Contains lots of caps'
         return 'sub'
 
     if contains_emoticons(tweet):
+        print 'contains emoticons'
         return 'sub'
 
     return None
 
 
+def tokenise_for_POS(tweet):
+    tokens = [token for token in tweet.split() if not contains_url(token)]
+    return tokens
+
 def tweet_contains_sentiment(tweet):
     emperical_result = empirical_check(tweet)
     if emperical_result is not None:
         return emperical_result
-    tagged_tweet = pos_tagger.tag(tweet.split())
+    tokens = tokenise_for_POS(tweet)
+    tagged_tweet = pos_tagger.tag(tokens)
     tweet_tag_model = extract_tags(tagged_tweet)
     prediction = svm.predict(tweet_tag_model)
-    if prediction == 'sub':
-        return True
-    else:
-        return False
+    return prediction
 
 

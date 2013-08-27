@@ -11,6 +11,7 @@ var count = 0;
 var posCount = 0;
 var negCount = 0;
 var current_query = "";
+var sentCount = 0
 
 function processInput() {
     console.log(current_query)
@@ -31,10 +32,14 @@ function processInput() {
             console.log("clear list");
             $("#posList").empty();
             $("#negList").empty();
+            $("#objList").empty();
+            $("#unsureList").empty();
+
             $('#posScore').html('');
             $('#negScore').html('');
             posCount = 0;
             negCount = 0;
+            sentCount = 0;
             count = 0;
 
 
@@ -49,14 +54,14 @@ function getTotalNoItems() {
 
 
 function writeToList(value, listID) {
-    $(listID).append('<li class="list-group">' + value.sentiment + value.text + '<li>');
+    $(listID).append('<li class="list-group">' + value.text + '<li>');
     count++;
 
 }
 
 function recalculateScore() {
-    var posScore = Math.round((100 * (posCount / count))).toString();
-    var negScore = Math.round((100 * (negCount / count))).toString();
+    var posScore = Math.round((100 * (posCount / sentCount))).toString();
+    var negScore = Math.round((100 * (negCount / sentCount))).toString();
     $('#posScore').html(posScore + '%');
     $('#negScore').html(negScore + '%')
 
@@ -67,7 +72,7 @@ function fetch_recursive() {
     var len = count;
     var search_query = $("#searchField").val();
     console.log(len)
-    if (len >= 20) {
+    if (len >= 50) {
         console.log("done");
         return
     }
@@ -76,11 +81,22 @@ function fetch_recursive() {
         $.each(data, function (key, value) {
             if (value.sentiment == "pos") {
                 posCount++;
+                sentCount++;
                 writeToList(value, "#posList")
             } else if (value.sentiment == "neg") {
                 negCount++;
+                sentCount++;
                 writeToList(value, "#negList")
+            } else if (value.sentiment == "unsure") {
+                writeToList(value, "#unsureList")
+            } else if (value.contains_sentiment == false) {
+                writeToList(value,'#objList')
+            } else {
+                console.log("cannot locate meaning.")
             }
+
+
+
         });
         recalculateScore();
         setTimeout(fetch_recursive, 5000);

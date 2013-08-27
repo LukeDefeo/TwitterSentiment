@@ -7,7 +7,13 @@ import sklearn
 
 __author__ = 'Luke'
 negations = {'no', 'not', 'never', "don't", 'dont', 'cant', "can't", 'cannot', 'wont'}
-
+promotional_base = {'bargain', 'deal', 'competition', 'win', 'won', 'promotion','sale'}
+promotional = set()
+for word in promotional_base:
+    promotional.add(word)
+    promotional.add(word + 's')
+    promotional.add('#' + word)
+    promotional.add('#' + word + 's')
 
 def contains_url(word):
     url_pattern = r'(\S+\.(com|co\.uk|ac|info|ly|net|org|edu|gov|to|us|au)(\/\S+)?)|http://'
@@ -82,7 +88,10 @@ def tokenise(word):
     word = remove_repeated_chars(word)
     return word
 
+
 """special case where we dont remove the repeated chars"""
+
+
 def tokenise2(word):
     if contains_url(word):
         return ''

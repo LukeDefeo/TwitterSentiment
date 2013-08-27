@@ -19,9 +19,12 @@ def main_page(request):
     return render(request, 'main_page.html')
 
 
+
+
 def return_json(request):
     global local_cache
     query = request.GET .get('q', '')
+    print query
     if query == '':
         return HttpResponseBadRequest()
     start = int(request.GET.get('start', 0))
@@ -34,7 +37,7 @@ def return_json(request):
 
     tweet_store = local_cache[query]
     print 'start =' + str(start)
-    data = tweet_store.get_latest_tweets(start)
+    data = tweet_store.get_latest_tweets_all(start)
     return HttpResponse(json.dumps(data, ensure_ascii=False))
 
 

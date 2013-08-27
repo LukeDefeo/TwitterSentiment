@@ -7,20 +7,28 @@
  */
 
 var Pages = {
-    searchResultsContainer : '#searchResultsContainer',
-        contactMessage : '#contactMessage',
-        aboutMessage : '#aboutMessage',
-        welcomeMessage : '#welcomeMessage'
+    searchResultsContainer: '#searchResultsContainer',
+    contactMessage: '#contactMessage',
+    aboutMessage: '#aboutMessage',
+    welcomeMessage: '#welcomeMessage',
+    moreSearchResultsContainer: '#moreResultsContainer'
+
 };
 var Navigation = {
-    navSearch : '#navSearch',
-    navAbout : '#navAbout',
-    navContact : '#navContact'
+    navSearch: '#navSearch',
+    navAbout: '#navAbout',
+    navContact: '#navContact',
+    navMoreResults: '#navMoreResults'
 };
 
 
 var current_page = Pages.welcomeMessage;
 var current_nav = Navigation.navSearch;
+
+function showMoreSearchResults() {
+    showContent(Pages.moreSearchResultsContainer)
+    changeNavBar(Navigation.navMoreResults)
+}
 
 
 function showSearchResults() {
@@ -53,7 +61,7 @@ function showContent(newPage) {
 
 
 function changeNavBar(newPage) {
-    if(current_nav != newPage) {
+    if (current_nav != newPage) {
         $(newPage).addClass('active');
         $(current_nav).removeClass('active');
         current_nav = newPage
