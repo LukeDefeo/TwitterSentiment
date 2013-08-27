@@ -31,6 +31,13 @@ function processInput() {
             console.log("clear list");
             $("#posList").empty();
             $("#negList").empty();
+            $('#posScore').html('');
+            $('#negScore').html('');
+            posCount = 0;
+            negCount = 0;
+            count = 0;
+
+
         }
         current_query = search_query
     }
