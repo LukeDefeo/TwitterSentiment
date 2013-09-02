@@ -1,3 +1,4 @@
+from collections import OrderedDict
 import datetime
 import time
 import json
@@ -10,7 +11,7 @@ from TweetFetcher import TweetStore, TweetProcessor
 
 __author__ = 'Luke'
 
-local_cache = {}
+local_cache = OrderedDict()
 processor = TweetProcessor()
 processor.start()
 
@@ -19,11 +20,9 @@ def main_page(request):
     return render(request, 'main_page.html')
 
 
-
-
 def return_json(request):
     global local_cache
-    query = request.GET .get('q', '')
+    query = request.GET.get('q', '')
     print query
     if query == '':
         return HttpResponseBadRequest()
@@ -43,8 +42,14 @@ def return_json(request):
 
 # called internally
 def clean_up(request):
-    pass
+    print 'Beginning cleanup, killing 10% of cache'
+    print 'Before'
+    print local_cache.keys()
+    to_kill = int(0.1 * len(OrderedDict))
+    for i in xrange(to_kill):
+        local_cache.popitem(last=False)
 
-
+    print 'After'
+    print local_cache.keys()
 
 

@@ -22,9 +22,11 @@ with open("../../Data/Test/test-data.csv") as test_in:
 print len(test_set)
 tagger = POSTagger('stanford-model.tagger', 'stanford-postagger.jar', encoding='utf8')
 
-tagged_set = tagger.batch_tag([sent.split() for sent, label in test_set])
-test_data = [extract_tags(sent) for sent in tagged_set]
-pickle.dump(test_data, open('../../Data/Test/sentiment-detector-test-data.obj', 'w+'))
+
+# tagged_set = tagger.batch_tag([sent.split() for sent, label in test_set])
+# test_data = [extract_tags(sent) for sent in tagged_set]
+# pickle.dump(test_data, open('../../Data/Test/sentiment-detector-test-data.obj', 'w+'))
+test_data = pickle.load(open('../../Data/Test/sentiment-detector-test-data.obj'))
 
 targets = [label for sent, label in test_set]
 

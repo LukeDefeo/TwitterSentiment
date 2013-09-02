@@ -12,6 +12,7 @@ var posCount = 0;
 var negCount = 0;
 var current_query = "";
 var sentCount = 0
+var tweetHashMap = {};
 
 function processInput() {
     console.log(current_query)
@@ -41,6 +42,7 @@ function processInput() {
             negCount = 0;
             sentCount = 0;
             count = 0;
+            tweetHashMap = {}
 
 
         }
@@ -54,16 +56,18 @@ function getTotalNoItems() {
 
 
 function writeToList(value, listID) {
-    $(listID).append('<li class="list-group">' + value.text + '<li>');
+    $(listID).append('<li class="list-group">' + value.guid + " " +  value.text + '<li>');
     count++;
 
 }
 
 function recalculateScore() {
-    var posScore = Math.round((100 * (posCount / sentCount))).toString();
-    var negScore = Math.round((100 * (negCount / sentCount))).toString();
-    $('#posScore').html(posScore + '%');
-    $('#negScore').html(negScore + '%')
+    if(sentCount > 0) {
+        var posScore = Math.round((100 * (posCount / sentCount))).toString();
+        var negScore = Math.round((100 * (negCount / sentCount))).toString();
+        $('#posScore').html(posScore + '%');
+        $('#negScore').html(negScore + '%')
+    }
 
 
 }
@@ -72,13 +76,22 @@ function fetch_recursive() {
     var len = count;
     var search_query = $("#searchField").val();
     console.log(len)
+    var proceed = true;
     if (len >= 50) {
         console.log("done");
         return
     }
     $.getJSON("/json", {q: search_query, start: len}, function (data) {
-        console.log('Recieving JSON');
+        console.log('Recieving JSON ' + search_query);
         $.each(data, function (key, value) {
+            if(tweetHashMap[value.guid] == undefined) {
+                tweetHashMap[value.guid] = true;
+            } else {
+                console.log('have additional service, shutting down')
+                proceed = false;
+                return
+            }
+
             if (value.sentiment == "pos") {
                 posCount++;
                 sentCount++;
@@ -99,7 +112,12 @@ function fetch_recursive() {
 
         });
         recalculateScore();
-        setTimeout(fetch_recursive, 5000);
+        if (proceed) {
+            setTimeout(fetch_recursive, 5000);
+        } else {
+            console.log('shutdown confirmd');
+        }
+
     });
 }
 

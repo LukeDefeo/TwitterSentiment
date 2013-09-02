@@ -5,7 +5,7 @@ from NLP.Common.helper import pop_slice
 __author__ = 'Luke'
 from TwitterSearch import TwitterSearchOrder, TwitterSearch, TwitterSearchException
 from NLP.sentiment_analyser.sentiment_analyser import classify_tweet, classify_tweet_better
-from NLP.sentiment_detector.sentiment_detector import tweet_contains_sentiment
+from NLP.sentiment_detector.sentiment_detector_nb import tweet_contains_sentiment
 
 consumer_key = 'ZYaUAuc8zNPM0BL5HgdSSg'
 consumer_secret = 'x0Xpf6d6P4nHN2GYl91XOK032ppjhCYOIQCQQT9wA'
@@ -21,7 +21,7 @@ def replace_hashtag(query):
 
 
 class TweetFetcher(object):
-    def __init__(self, query, max_tweets=50):
+    def __init__(self, query, max_tweets=500):
         self.GUID = 0
         self.query_terms = [replace_hashtag(word) for word in query.split()]
         self.count = 0
@@ -29,19 +29,22 @@ class TweetFetcher(object):
         self.tso = TwitterSearchOrder()
         self.tso.setKeywords(self.query_terms)
         self.tso.setLanguage('en')
-        self.tweets_per_page = 50
+        self.tweets_per_page = 100
         self.tso.setCount(self.tweets_per_page)
         self.tso.setIncludeEntities(False)
         self.twitter_search = TwitterSearch(consumer_key, consumer_secret, access_token, access_token_secret)
 
     def get_tweets(self):
         output = []
+        unique_tweets = set()
         try:
             for tweet in self.twitter_search.searchTweetsIterable(self.tso):
                 self.GUID += 1
                 if self.GUID > self.MAX_TWEETS:
                     break
-                output.append({'guid': self.GUID, 'id': tweet['id'], 'text': tweet['text'], 'query': self.query_terms})
+                if tweet['text'] not in unique_tweets:
+                    unique_tweets.add(tweet['text'])
+                    output.append({'guid': self.GUID, 'id': tweet['id'], 'text': tweet['text'], 'query': self.query_terms})
 
         except TwitterSearchException as e:
             print e

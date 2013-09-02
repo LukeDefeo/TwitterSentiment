@@ -2,7 +2,8 @@
 import os
 import sys
 import NLP.sentiment_analyser.sentiment_analyser
-import NLP.sentiment_detector.sentiment_detector
+from NLP.sentiment_detector.sentiment_detector_nb import tweet_contains_sentiment
+
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 
