@@ -1,4 +1,5 @@
 import cPickle as pickle
+from sklearn import neighbors
 from sklearn.svm import SVC
 from NLP.sentiment_detector.sentiment_detector import extract_tags
 
@@ -21,7 +22,8 @@ training_target = total_target[:cut_off]
 test_target = total_target[cut_off:]
 
 svm = SVC()
+
 svm.fit(training_data, training_target)
 
-pickle.dump(svm, open('../../Data/Models/sentiment-detector-svm','wb'))
+# pickle.dump(svm, open('../../Data/Models/sentiment-detector-knn','wb'))
 print svm.score(test_data, test_target)

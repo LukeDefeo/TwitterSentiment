@@ -33,6 +33,10 @@ tag_index = {'CC': 0, 'CD': 1, 'DT': 2, 'EX': 3, 'FW': 4, 'IN': 5, 'JJ': 6, 'JJR
 
 
 def empirical_check(tweet):
+
+    if contains_url(tweet):
+        print 'contains url'
+        return 'obj'
     tokens = [tokenise2(word) for word in tweet.split()]
 
     if contains_promotional_words(tokens):
@@ -45,6 +49,8 @@ def empirical_check(tweet):
             return 'sub'
 
     tokens = [remove_repeated_chars(token) for token in tokens]
+
+
     tokens = [token for token in tokens if not contains_url(token)]
     if contains_trigger_words(tokens):
         print 'contains trigger word'
