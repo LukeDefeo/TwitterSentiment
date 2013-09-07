@@ -27,7 +27,7 @@ def classify_tweet_better(tweet, query_terms):
     no_words = len(tweet.split())
     threshold = 0.03
 
-    print str(confidence) + probabilities.max()
+    # print str(confidence) + probabilities.max()
     if confidence > 0.1:
         return probabilities.max()
     else:
@@ -44,6 +44,7 @@ def classify_tweet(tweet, query_terms=[]):
 
 
 def empirical_check(tweet):
+
     tokens = [token for token in tweet.split() if not contains_url(token)]
     tweet = ' '.join(tokens)
     if contains_negative_emoticon(tweet):

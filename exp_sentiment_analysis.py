@@ -2,7 +2,6 @@ from NLP.sentiment_analyser.sentiment_analyser import classify_tweet, classify_t
 
 __author__ = 'Luke'
 
-print 'Type quit to exit.'
 while True:
     print ' '
     sentence = raw_input('Enter word / sentence to classify... \n')

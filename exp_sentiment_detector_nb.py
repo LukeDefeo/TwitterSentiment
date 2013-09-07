@@ -9,4 +9,8 @@ classifier = pickle.load(open(os.path.join(os.path.dirname(__file__), 'Data/Mode
 while True:
     sent = raw_input("Enter sentence...\n")
     features = extract_tweet_features_for_detection(sent)
-    print 'Sentence is ' + classifier.classify(features) + 'jective'
+    res = classifier.classify(features)
+    if res == 'sub':
+        print 'Sentence is Subjective'
+    else:
+        print 'Sentence is Objective'
